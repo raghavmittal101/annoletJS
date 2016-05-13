@@ -9,6 +9,7 @@
 * To setup this repository, 
 * go to terminal and execute `git clone https://raghav_mittal@bitbucket.org/raghav_mittal/annolet.git`
 * Now the repo is cloned on to your local machine.
+
 ####Setting up the Code####
 * To setup the JavaScript Code, download the org-file provided.
 * Open Emacs24 or above and open this file.
