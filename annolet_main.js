@@ -8,7 +8,7 @@ var annolet_btn;
 function annolet_createContainer() {
     // appending a CSS stylesheet to head of webpage
     var link = document.createElement('link');
-    link.href = "//raw.githubusercontent.com/SSS-Studio-development/annoletjs/master/control-menu.css?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
+    link.href = "//ba8fbd5823dec19f2a925b874342f02f325c5581.googledrive.com/host/0B0c01D4InsAOflQ0TUhidTJPUTNycmpyR0IwQ2R1RzBnSVE0SVNzLUxPeHcxOEZVM2RISzg/final/control-menu.css?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
     link.type = "text/css";
     link.rel = "stylesheet";
     document.getElementsByTagName('head')[0].appendChild(link);
@@ -57,7 +57,7 @@ function annolet_main() {
         } // for IE
         var target = 'target' in event ? event.target : event.srcElement; // for IE
         var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
-        var xpath = anno_getXpathTo(target);        
+        var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
         } else if (annolet_btn === 2) {
