@@ -8,7 +8,8 @@ var annolet_btn;
 function annolet_createContainer() {
     // appending a CSS stylesheet to head of webpage
     var link = document.createElement('link');
-    link.href = "//raw.githubusercontent.com/SSS-Studio-development/annoletjs/patch/annolet.css?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
+    // using rawgit.com MaxCDN.. files directly linked to git repo 'annoletjs/patch'
+    link.href = "https://cdn.rawgit.com/SSS-Studio-development/annoletjs/patch/annolet.css"; //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
     link.type = "text/css";
     link.rel = "stylesheet";
     document.getElementsByTagName('head')[0].appendChild(link);
