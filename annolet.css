@@ -23,7 +23,6 @@
       font-family: sans-serif;
       text-transform:uppercase;
       font-size:.8em;
-      background-color:yellow;
 }
 .annolet-tools-menu-item:hover, .annolet-tools-menu-item:active{
   background-color: yellow;
