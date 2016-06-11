@@ -51,6 +51,7 @@ function anno_getElementByXpath(xpath) {
 
 //main function which will execute other functions
 function annolet_main() {
+    console.log('hello world annolet')
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
