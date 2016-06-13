@@ -57,12 +57,18 @@ function get_phonetics(str){
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   xhr.send(JSON.stringify({'sentence':'between'}));
   
+  xhr.onreadystatechange = processRequest;
   console.log(xhr.status);
-  
-  
-  alert(xhr.responseText);
-  
 
+}
+
+function processRequest(e)
+{
+  if (xhr.readyState == 4)
+  {
+    alert(xhr.responseText);
+  }
+  
 }
 
 //main function which will execute other functions
