@@ -49,9 +49,16 @@ function anno_getElementByXpath(xpath) {
     return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
+function get_phonetics(str){
+  xhttp.open("GET","localhost:5000/test",false);
+  xhttp.send();
+  console.log(xhttp.responseText);
+}
+
 //main function which will execute other functions
 function annolet_main() {
-    console.log('hello world annolet')
+  console.log('hello world annolet');
+  get_phonetics("between");
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
