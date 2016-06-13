@@ -54,7 +54,7 @@ function get_phonetics(str){
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "http://localhost:5000/test", true); // enter the actual URL for web-service here
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-  xhr.send(JSON.stringify({'sentence':str}));
+  xhr.send(JSON.stringify({'sentence':'between'}));
   
   console.log(xhr.status);
   
