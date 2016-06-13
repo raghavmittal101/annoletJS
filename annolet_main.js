@@ -59,10 +59,8 @@ function get_phonetics(str){
   
   console.log(xhr.status);
   
-  if (xhr.readyState == 4 )
-  {
-    alert(xhr.responseText);
-  }
+  
+  alert(xhr.responseText);
   
 
 }
