@@ -50,6 +50,7 @@ function anno_getElementByXpath(xpath) {
 }
 
 function get_phonetics(str){
+  var xhttp = new XMLHttpRequest();
   xhttp.open("GET","localhost:5000/test",false);
   xhttp.send();
   console.log(xhttp.responseText);
