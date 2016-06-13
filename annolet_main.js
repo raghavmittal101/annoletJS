@@ -59,17 +59,16 @@ function get_phonetics(str){
   
   xhr.onreadystatechange = processRequest;
   console.log(xhr.status);
-
-}
-
-function processRequest(e)
-{
-  if (xhr.readyState == 4)
+  function processRequest(e)
   {
-    alert(xhr.responseText);
+    if (xhr.readyState == 4)
+    {
+      alert(xhr.responseText);
+    }
   }
-  
+
 }
+
 
 //main function which will execute other functions
 function annolet_main() {
