@@ -50,15 +50,26 @@ function anno_getElementByXpath(xpath) {
 }
 
 function get_phonetics(str){
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("GET","localhost:5000/test",false);
-  xhttp.send();
-  console.log(xhttp.responseText);
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://localhost:5000/test", true); // enter the actual URL for web-service here
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.send(JSON.stringify({'sentence':str}));
+  
+  console.log(xhr.status);
+  
+  if (xhr.readyState == 4 )
+  {
+    alert(xhr.responseText);
+  }
+  
+
 }
 
 //main function which will execute other functions
 function annolet_main() {
-  console.log('hello world annolet');
+    console.log('hello world annolet');
+    get_phonetics('between the world we are stuck');
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
