@@ -63,6 +63,7 @@ function get_phonetics(str){
   {
     if (xhr.readyState == 4)
     {
+      alert(xhr.responseText);
       return (xhr.responseText);
     }
   }
@@ -73,8 +74,7 @@ function get_phonetics(str){
 //main function which will execute other functions
 function annolet_main() {
     console.log('hello world annolet');
-  var temp = get_phonetics("between the world");
-  alert(temp);
+  get_phonetics("between the world");
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
