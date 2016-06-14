@@ -116,7 +116,7 @@ function anno_highlight(xpath) {
     if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
         // hightlight selected element, calling function
       $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
-
+      $j(anno_getElementByXpath(xpath)).innerHTML = "new phonetic translated text";   
         annolet_pushToStack(xpath);
     } else {
         console.log('highlighted already');
