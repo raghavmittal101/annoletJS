@@ -63,7 +63,8 @@ function get_phonetics(str){
   {
     if (xhr.readyState == 4)
     {
-      return (xhr.responseText);
+      var temp = xhr.responseText;
+      return temp;
     }
   }
 
