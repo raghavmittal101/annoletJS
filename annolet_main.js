@@ -52,7 +52,7 @@ function anno_getElementByXpath(xpath) {
 function get_phonetics(str){
   
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "//localhost:5000/translate", true); // enter the actual URL for web-service here
+  xhr.open("POST", "//localhost:5000/translate", false); // enter the actual URL for web-service here
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
   xhr.send(JSON.stringify({"sentence":str}));
@@ -64,7 +64,7 @@ function get_phonetics(str){
     if (xhr.readyState == 4)
     {
       alert(xhr.responseText);
-      return xhr;
+      return (xhr.responseText);
     }
   }
 
@@ -74,7 +74,8 @@ function get_phonetics(str){
 //main function which will execute other functions
 function annolet_main() {
   console.log('hello world annolet');
-  get_phonetics("between world");
+  var temp = get_phonetics("between");
+  console.log(temp);
   console.log('some test string');
     annolet_createContainer();
     document.onclick = function(event) {
