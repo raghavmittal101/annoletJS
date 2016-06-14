@@ -52,7 +52,7 @@ function anno_getElementByXpath(xpath) {
 function get_phonetics(str){
   
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "//localhost:5000/translate", true); // enter the actual URL for web-service here
+  xhr.open("POST", "http://localhost:5000/translate", true); // enter the actual URL for web-service here
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   xhr.send(JSON.stringify({'sentence':'between'}));
