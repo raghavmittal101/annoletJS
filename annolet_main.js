@@ -58,6 +58,7 @@ function annolet_main() {
         } // for IE
         var target = 'target' in event ? event.target : event.srcElement; // for IE
         var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
+        disableAllLiks()  // it will disable all the links present in webpage iteratively
         var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
@@ -65,6 +66,17 @@ function annolet_main() {
             anno_annotate(xpath);  //for now this function not available
         }
     };
+}
+
+// funtion to diable all links
+function disableAllLiks(){
+  var elems = document.getElementsByTagName("*");
+      var len = elems.length;
+      for (i=0; i<len; i++) {
+             if(elems[i].tagName.toLowerCase() == 'a'){
+                 elems[i].disabled = true;
+             }
+         }
 }
 
 //function to push objects to a stack.
