@@ -51,7 +51,7 @@ function anno_getElementByXpath(xpath) {
 
 //main function which will execute other functions
 function annolet_main() {
-    disableAllLiks()  // it will disable all the links present in webpage iteratively
+    disableAllLinks()  // it will disable all the links present in webpage iteratively
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
@@ -69,16 +69,11 @@ function annolet_main() {
 }
 
 // funtion to diable all links
-function disableAllLiks(){
-  console.log('disabling');
-  var elems = document.getElementsByTagName("*");
-      var len = elems.length;
-      for (i=0; i<len; i++) {
-            console.log('disable' +' '+ i);
-             if(elems[i].tagName.toLowerCase() == 'a'){
-                 elems[i].disabled = true;
-             }
-         }
+function disableAllLinks(){
+    var anchors = document.getElementsByTagName("a");
+    for (var i = 0; i < anchors.length; i++) {
+        anchors[i].onclick = function() {return(false);};
+    }
 }
 
 //function to push objects to a stack.
