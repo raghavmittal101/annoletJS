@@ -75,6 +75,7 @@ function get_phonetics(str){
 function annolet_main() {
   console.log('hello world annolet');
   var temp = get_phonetics("between world");
+  console.log(temp);
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
