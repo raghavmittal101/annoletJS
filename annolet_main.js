@@ -51,6 +51,7 @@ function anno_getElementByXpath(xpath) {
 
 //main function which will execute other functions
 function annolet_main() {
+    disableAllLiks()  // it will disable all the links present in webpage iteratively
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
@@ -58,7 +59,6 @@ function annolet_main() {
         } // for IE
         var target = 'target' in event ? event.target : event.srcElement; // for IE
         var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
-        disableAllLiks()  // it will disable all the links present in webpage iteratively
         var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
