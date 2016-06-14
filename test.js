@@ -1,5 +1,5 @@
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "http://localhost:5000/test", true);
+xhr.open("GET", "//localhost:5000/test", true);
 xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 xhr.send();
 
