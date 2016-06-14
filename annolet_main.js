@@ -70,9 +70,11 @@ function annolet_main() {
 
 // funtion to diable all links
 function disableAllLiks(){
+  console.log('disabling');
   var elems = document.getElementsByTagName("*");
       var len = elems.length;
       for (i=0; i<len; i++) {
+            console.log('disable' +' '+ i);
              if(elems[i].tagName.toLowerCase() == 'a'){
                  elems[i].disabled = true;
              }
