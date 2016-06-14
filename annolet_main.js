@@ -63,6 +63,7 @@ function get_phonetics(str){
   {
     if (xhr.readyState == 4)
     {
+      console.log('variable sending here');
       return xhr;
     }
   }
