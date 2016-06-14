@@ -58,13 +58,12 @@ function get_phonetics(str){
   xhr.send(JSON.stringify({"sentence":str}));
   
   xhr.onreadystatechange = processRequest;
-  console.log(String(xhr.responseText));
   function processRequest(e)
   {
     if (xhr.readyState == 4)
     {
       alert(xhr.responseText);
-      return (xhr.responseText);
+      return String(xhr.responseText);
     }
   }
 
