@@ -89,9 +89,12 @@ function annolet_pushToStack(xpath, anno_content) {
     if (!anno_content) {
         anno_content = null;
     } //initializing anno_content to null if highlighting done.
+    authername = prompt('enter auther name');
+    taginfo = prompt('enter info');
     var annolet_obj = {
-        authorname: 'raghav',
+        authorname: authorname,
         id: i++,
+        tag: taginfo,
         type: annolet_btn, //1 for highlight, 2 for annotation.
         content: anno_content, //would be null if highlighting is done only.
         xpath: xpath
