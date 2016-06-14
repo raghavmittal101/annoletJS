@@ -20,7 +20,13 @@ function annolet_createContainer() {
     annolet_container.id = 'annolet-container';
     body.appendChild(annolet_container);
     //injecting html code
-    document.getElementById('annolet-container').innerHTML = "<ul class=annolet-tools-menu><span style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span style='color:grey;'>|</span><li class=annolet-tools-menu-item id=login-btn>login</li><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >annotate</li><li class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li><li class=annolet-tools-menu-item id=save-btn>save</li><li class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>"; //HTML to create a list of options
+    document.getElementById('annolet-container').innerHTML = "<ul id='annolet' class=annolet-tools-menu>"+
+    "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
+    "<span id='annolet' style='color:grey;'>|</span>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >annotate</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
+    "</ul>"; //HTML to create a list of options
 }
 
 // function to get Xpath to passed element
@@ -68,7 +74,7 @@ function annolet_main() {
     };
 }
 
-// funtion to diable all links
+// funtion to disable all links
 function disableAllLinks(){
     var anchors = document.getElementsByTagName("a");
     for (var i = 0; i < anchors.length; i++) {
@@ -97,7 +103,7 @@ function annolet_pushToStack(xpath, anno_content) {
 //function for highlighting element
 function anno_highlight(xpath) {
     //if element is already highlighted
-    if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
+    if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id) || anno_getElementByXpath(xpath).id != "annolet") {
         // hightlight selected element, calling function
         $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
         annolet_pushToStack(xpath);
