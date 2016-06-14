@@ -70,11 +70,16 @@ function get_phonetics(str){
 
 }
 
+function test_func(str)
+{
+  return ("between");
+}
+
 
 //main function which will execute other functions
 function annolet_main() {
   console.log('hello world annolet');
-  var temp = get_phonetics("between");
+  var temp = test_func("between");
   console.log(temp);
   console.log('some test string');
     annolet_createContainer();
