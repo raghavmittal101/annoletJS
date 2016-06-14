@@ -55,7 +55,7 @@ function get_phonetics(str){
   xhr.open("POST", "//localhost:5000/translate", true); // enter the actual URL for web-service here
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-  xhr.send(JSON.stringify({"sentence":"between"}));
+  xhr.send(JSON.stringify({"sentence":str}));
   
   xhr.onreadystatechange = processRequest;
   console.log(xhr.status);
@@ -63,7 +63,7 @@ function get_phonetics(str){
   {
     if (xhr.readyState == 4)
     {
-      alert(xhr.responseText);
+      return (xhr.responseText);
     }
   }
 
@@ -73,7 +73,8 @@ function get_phonetics(str){
 //main function which will execute other functions
 function annolet_main() {
     console.log('hello world annolet');
-    get_phonetics("between the world");
+  var temp = get_phonetics("between the world");
+  alert(temp);
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
@@ -113,7 +114,8 @@ function anno_highlight(xpath) {
     //if element is already highlighted
     if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
         // hightlight selected element, calling function
-        $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");   
         annolet_pushToStack(xpath);
     } else {
         console.log('highlighted already');
