@@ -52,13 +52,13 @@ function anno_getElementByXpath(xpath) {
 function get_phonetics(str){
   
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "//localhost:5000/translate", false); // enter the actual URL for web-service here
+  xhr.open("POST", "//localhost:5000/translate", true); // enter the actual URL for web-service here
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
   xhr.send(JSON.stringify({"sentence":str}));
   
   xhr.onreadystatechange = processRequest;
-  console.log(xhr.status);
+  console.log(String(xhr.responseText));
   function processRequest(e)
   {
     if (xhr.readyState == 4)
@@ -72,14 +72,14 @@ function get_phonetics(str){
 
 function test_func(str)
 {
-  return ("between");
+  return String("between");
 }
 
 
 //main function which will execute other functions
 function annolet_main() {
   console.log('hello world annolet');
-  var temp = test_func("between");
+  var temp = get_phonetics("between");
   console.log(temp);
   console.log('some test string');
     annolet_createContainer();
@@ -121,7 +121,6 @@ function anno_highlight(xpath) {
     //if element is already highlighted
   if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
     console.log("about to highlight");
-    console.log($j(anno_getElementByXpath(xpath)).innerHTML);
     $j(anno_getElementByXpath(xpath)).text( "new phonetic translated text");           // hightlight selected element, calling function
       $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
