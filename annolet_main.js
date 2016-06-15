@@ -105,13 +105,15 @@ function annolet_pushToStack(xpath, anno_content) {
 
 //function for highlighting element
 function anno_highlight(xpath) {
+    clicked_element = anno_getElementByXpath(xpath)
     //if element is already highlighted
-    if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id) || anno_getElementByXpath(xpath).id != "annolet") {
-        // hightlight selected element, calling function
-        $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
-        annolet_pushToStack(xpath);
-    } else {
-        console.log('highlighted already');
+    if (clicked_element.id == "mark" OR clicked_element.id == "annolet") {
+        console.log('not permitted');
+    }
+    else {
+      // hightlight selected element
+      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+      annolet_pushToStack(xpath); // storing into stack
     }
 }
 
