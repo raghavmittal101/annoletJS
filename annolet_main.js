@@ -40,7 +40,7 @@ function anno_getXpathTo(element) {
     var ix = 0;
     var siblings = element.parentNode.childNodes;
     for (var i = 0; i < siblings.length; i++) {
-        var sibling = siblings[i];
+        var sibling = siblings[i];a
         if (sibling === element) {
             return anno_getXpathTo(element.parentNode) + '/' + element.tagName.toLowerCase() + '[' + (ix + 1) + ']';
         }
@@ -89,7 +89,7 @@ function annolet_pushToStack(xpath, anno_content) {
     if (!anno_content) {
         anno_content = null;
     } //initializing anno_content to null if highlighting done.
-    authername = prompt('enter auther name');
+    authorname = prompt('enter auther name');
     taginfo = prompt('enter info');
     var annolet_obj = {
         authorname: authorname,
