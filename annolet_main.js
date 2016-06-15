@@ -23,8 +23,7 @@ function annolet_createContainer() {
     document.getElementById('annolet-container').innerHTML = "<ul id='annolet' class=annolet-tools-menu>"+
     "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
     "<span id='annolet' style='color:grey;'>|</span>"+
-    "<li id='annolet' class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >annotate</li>"+
-    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>TagIt!</li>"+
     "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
     "</ul>"; //HTML to create a list of options
 }
@@ -59,7 +58,7 @@ function anno_getElementByXpath(xpath) {
 function annolet_main() {
     disableAllLinks()  // it will disable all the links present in webpage iteratively
     annolet_createContainer();
-    document.onclick = function(event) {
+    document.onRightClick = function(event) {
         if (event === undefined) {
             event = window.event;
         } // for IE
@@ -68,8 +67,6 @@ function annolet_main() {
         var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
-        } else if (annolet_btn === 2) {
-            anno_annotate(xpath);  //for now this function not available
         }
     };
 }
@@ -82,25 +79,35 @@ function disableAllLinks(){
     }
 }
 
-//function to push objects to a stack.
+//function to store tags into JSON object.
 var i = 1; //counter for id
-var annolet_stack = []; //object will be pushed to this
-function annolet_pushToStack(xpath, anno_content) {
-    if (!anno_content) {
-        anno_content = null;
-    } //initializing anno_content to null if highlighting done.
-    authorname = prompt('enter author name');
-    if(authorname){taginfo = prompt('enter info');}
+function annolet_insertIntoObject(xpath) {
+  if(!annolet_object){
+    authorname = prompt('enter authorname');
     var annolet_obj = {
+        url: window.location.href,
         authorname: authorname,
-        id: i++,
-        tag: taginfo,
-        type: annolet_btn, //1 for highlight, 2 for annotation.
-        content: anno_content, //would be null if highlighting is done only.
-        xpath: xpath
+        tags : []
     };
-    // pushing data to stack
-    annolet_stack.push(annolet_obj);
+    tagObject(xpath, annolet_obj);
+  }
+  else {
+    tagObject(xpath, annolet_obj);
+  }
+}
+
+// function for creation of objects
+function tagObject(xpath, obj){
+  tagName = prompt('tagName:');
+  tagInfo = prompt('tagInfo');
+  obj.tags.append(
+    {
+      id: i++,
+      tagName: tagName,
+      tagInfo: tagInfo,
+      xpath: xpath
+    },
+  );
 }
 
 //function for highlighting element
@@ -111,18 +118,8 @@ function anno_highlight(xpath) {
         console.log('not permitted');
     }
     else {
-      // hightlight selected element
+      // hightlight selected element and store it
       $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
-      annolet_pushToStack(xpath); // storing into stack
-    }
-}
-
-function anno_annotate(xpath){
-if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
-        //adding orange coloured border around selected part.
-        $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='border:solid 1px orange;'></span>");
-        annolet_pushToStack(xpath);
-    } else {
-        console.log('highlighted already');
+      annolet_insertIntoObject(xpath); // storing into object
     }
 }
