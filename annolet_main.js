@@ -107,7 +107,7 @@ function annolet_pushToStack(xpath, anno_content) {
 function anno_highlight(xpath) {
     clicked_element = anno_getElementByXpath(xpath)
     //if element is already highlighted
-    if (clicked_element.id == "mark" OR clicked_element.id == "annolet") {
+    if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
         console.log('not permitted');
     }
     else {
