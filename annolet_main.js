@@ -40,7 +40,7 @@ function anno_getXpathTo(element) {
     var ix = 0;
     var siblings = element.parentNode.childNodes;
     for (var i = 0; i < siblings.length; i++) {
-        var sibling = siblings[i];a
+        var sibling = siblings[i];
         if (sibling === element) {
             return anno_getXpathTo(element.parentNode) + '/' + element.tagName.toLowerCase() + '[' + (ix + 1) + ']';
         }
