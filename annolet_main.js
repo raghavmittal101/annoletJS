@@ -58,7 +58,7 @@ function anno_getElementByXpath(xpath) {
 function annolet_main() {
     disableAllLinks()  // it will disable all the links present in webpage iteratively
     annolet_createContainer();
-    document.onRightClick = function(event) {
+    document.onClick = function(event) {
         if (event === undefined) {
             event = window.event;
         } // for IE
