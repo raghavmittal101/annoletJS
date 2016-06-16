@@ -84,7 +84,7 @@ function disableAllLinks(){
 function annolet_iterateElements(){
   var tags = document.getElementsByTagName('*');
   for(var i=0; i<=tags.length; i++){
-    tags[i].wrap("<div class='annolet_init'></span>")
+    $j(tags[i]).wrap("<div class='annolet_init'></div>")
   }
 }
 
