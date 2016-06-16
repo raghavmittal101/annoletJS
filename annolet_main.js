@@ -106,7 +106,7 @@ function tagObject(xpath, obj){
       tagName: tagName,
       tagInfo: tagInfo,
       xpath: xpath
-    },
+    }
   )
 }
 
