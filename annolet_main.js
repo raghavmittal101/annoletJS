@@ -107,7 +107,7 @@ function tagObject(xpath, obj){
       tagInfo: tagInfo,
       xpath: xpath
     },
-  );
+  )
 }
 
 //function for highlighting element
