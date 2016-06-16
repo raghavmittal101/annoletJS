@@ -58,7 +58,7 @@ function anno_getElementByXpath(xpath) {
 function annolet_main() {
     disableAllLinks()  // it will disable all the links present in webpage iteratively
     annolet_createContainer();
-    document.onClick = function(event) {
+    document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
         } // for IE
@@ -81,10 +81,11 @@ function disableAllLinks(){
 
 //function to store tags into JSON object.
 var i = 1; //counter for id
+var annolet_obj = 0; //will save jason objects
 function annolet_insertIntoObject(xpath) {
-  if(!annolet_object){
+  if(annolet_obj==0){
     authorname = prompt('enter authorname');
-    var annolet_obj = {
+    annolet_obj = {
         url: window.location.href,
         authorname: authorname,
         tags : []
