@@ -81,11 +81,6 @@ function annolet_main() {
   console.log(phonetic_trans);
   console.log('some test string');
   annolet_createContainer();
-  while(typeof phonetic_trans === 'undefined')
-  {
-    var raj = 'r';
-    
-  }
     document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
@@ -125,6 +120,7 @@ function anno_highlight(xpath) {
   if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
     console.log("about to highlight");
     $j(anno_getElementByXpath(xpath)).text( "new phonetic translated text");           // hightlight selected element, calling function
+    console.log(phonetic_trans);
       $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
         annolet_pushToStack(xpath);
