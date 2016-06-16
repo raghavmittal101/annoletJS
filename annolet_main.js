@@ -66,9 +66,9 @@ function get_phonetics(str){
   {
     if (xhr.readyState == 4)
     {
-
       console.log('pho trans set');
       phonetic_trans = xhr.responseText;
+      return String(xhr.responseText);
     }
   }
 
@@ -81,7 +81,11 @@ function annolet_main() {
   console.log(phonetic_trans);
   console.log('some test string');
   annolet_createContainer();
-  console.log(phonetic_trans);
+  while(typeof phonetic_trans === 'undefined')
+  {
+    var raj = 'r';
+    
+  }
     document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
