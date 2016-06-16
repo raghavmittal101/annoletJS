@@ -68,7 +68,7 @@ function get_phonetics(str){
     {
 
       console.log('pho trans set');
-      phonetic_trans = alert.responseText;
+      phonetic_trans = xhr.responseText;
     }
   }
 
