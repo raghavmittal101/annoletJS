@@ -80,7 +80,7 @@ function disableAllLinks(){
 }
 
 //function to iterate through all elements
-functions iterateElements(){
+function iterateElements(){
   var elemets = document.getElementsByTagName('*');
   var el=0;
   for el in elements{
