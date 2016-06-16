@@ -56,8 +56,10 @@ function get_phonetics(str){
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
   xhr.send(JSON.stringify({"sentence":str}));
-  
+
+
   xhr.onreadystatechange = processRequest;
+  return String('between');
   function processRequest(e)
   {
     if (xhr.readyState == 4)
@@ -68,12 +70,6 @@ function get_phonetics(str){
   }
 
 }
-
-function test_func(str)
-{
-  return String("between");
-}
-
 
 //main function which will execute other functions
 function annolet_main() {
