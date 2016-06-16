@@ -51,7 +51,6 @@ function anno_getElementByXpath(xpath) {
 
 var xhr;
 var pflag;
-var time;
 
 function get_phonetics(str){
   
@@ -115,17 +114,6 @@ function annolet_pushToStack(xpath, anno_content) {
 
 function set_function(xpath)
 {
-  if(typeof phonetic_trans !== 'undefined')
-  {
-    console.log("text changing");
-    $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
-    window.clearInterval(timer);
-  }
-  else
-  {
-    console.log("returned without change");
-    set_function(xpath);
-  }
 }
 
 //function for highlighting element
@@ -134,7 +122,23 @@ function anno_highlight(xpath) {
   if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
     get_phonetics(text_to_translate);
-    timer = window.setInterval(set_function(xpath),1000);
+    var timer = window.setInterval
+    (
+      function ()
+      {
+        if(typeof phonetic_trans !== 'undefined')
+        {
+          console.log("text changing");
+          $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
+          window.clearInterval(timer);
+        }
+        else
+        {
+          console.log("returned without change");
+        }
+      }
+      ,1000
+    );
     $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
         annolet_pushToStack(xpath);
