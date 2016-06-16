@@ -51,6 +51,7 @@ function anno_getElementByXpath(xpath) {
 
 var xhr;
 var pflag;
+var time;
 
 function get_phonetics(str){
   
@@ -132,7 +133,7 @@ function anno_highlight(xpath) {
   if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
     get_phonetics(text_to_translate);
-    var timer = window.setInterval(set_function(xpath),1000);
+    timer = window.setInterval(set_function(xpath),1000);
     $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
         annolet_pushToStack(xpath);
