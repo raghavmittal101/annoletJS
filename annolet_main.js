@@ -67,6 +67,7 @@ function get_phonetics(str){
     if (xhr.readyState == 4)
     {
       alert(xhr.responseText);
+      console.log('pho trans set');
       phonetic_trans = alert.responseText;
     }
   }
