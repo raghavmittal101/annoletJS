@@ -79,6 +79,15 @@ function disableAllLinks(){
     }
 }
 
+//function to iterate through all elements
+functions iterateElements(){
+  var elemets = document.getElementsByTagName('*');
+  var el=0;
+  for el in elements{
+    elements[el].wrap("<div class='annolet_init'></span>")
+  }
+}
+
 //function to store tags into JSON object.
 var annolet_obj = 0; //will save jason objects
 function annolet_insertIntoObject(xpath) {
