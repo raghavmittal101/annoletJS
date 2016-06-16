@@ -49,11 +49,12 @@ function anno_getElementByXpath(xpath) {
     return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
-var phonetic_trans;
+var xhr;
+var pflag;
 
 function get_phonetics(str){
   
-  var xhr = new XMLHttpRequest();
+  xhr = new XMLHttpRequest();
   xhr.open("POST", "//localhost:5000/translate", true); // enter the actual URL for web-service here
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
@@ -64,11 +65,11 @@ function get_phonetics(str){
 
   function processRequest(e)
   {
+    pflag = 1;
     if (xhr.readyState == 4)
     {
       console.log('pho trans set');
       phonetic_trans = xhr.responseText;
-      return String(xhr.responseText);
     }
   }
 
@@ -111,16 +112,28 @@ function annolet_pushToStack(xpath, anno_content) {
     annolet_stack.push(annolet_obj);
 }
 
+function set_function(xpath)
+{
+  if(phonetic_trans !== 'undefined')
+  {
+    console.log("text changing");
+    $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
+    window.clearInterval(timer);
+  }
+  else
+  {
+    return;
+  }
+}
+
 //function for highlighting element
 function anno_highlight(xpath) {
     //if element is already highlighted
   if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
-    var temp = $j(anno_getElementByXpath(xpath)).html();
-    while(typeof phonetic_trans === 'undefined')
-    {
-      var raj = ' ';
-    }
-    $j(anno_getElementByXpath(xpath)).text(phonetic_trans); // hightlight selected element, calling function
+    var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
+    get_phonetics(text_to_translate);
+    var timer = window.setInterval(set_function(xpath),1000);
+     // hightlight selected element, calling function
     
     $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
