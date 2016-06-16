@@ -77,9 +77,6 @@ function get_phonetics(str){
 //main function which will execute other functions
 function annolet_main() {
   console.log('hello world annolet');
-  get_phonetics("between");
-  console.log(phonetic_trans);
-  console.log('some test string');
   annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
@@ -123,8 +120,7 @@ function anno_highlight(xpath) {
     {
       var raj = ' ';
     }
-    var ans = get_phonetics(phonetic_trans);
-    $j(anno_getElementByXpath(xpath)).text(ans); // hightlight selected element, calling function
+    $j(anno_getElementByXpath(xpath)).text(phonetic_trans); // hightlight selected element, calling function
     
     $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
