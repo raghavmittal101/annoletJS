@@ -80,7 +80,8 @@ function annolet_main() {
   var temp = get_phonetics("between");
   console.log(phonetic_trans);
   console.log('some test string');
-    annolet_createContainer();
+  annolet_createContainer();
+  console.log(phonetic_trans);
     document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
