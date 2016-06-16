@@ -49,6 +49,8 @@ function anno_getElementByXpath(xpath) {
     return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
+var phonetic_trans;
+
 function get_phonetics(str){
   
   var xhr = new XMLHttpRequest();
@@ -59,13 +61,13 @@ function get_phonetics(str){
 
 
   xhr.onreadystatechange = processRequest;
-  return String('between');
+
   function processRequest(e)
   {
     if (xhr.readyState == 4)
     {
       alert(xhr.responseText);
-      return String(xhr.responseText);
+      phonetic_trans = alert.responseText;
     }
   }
 
@@ -75,7 +77,7 @@ function get_phonetics(str){
 function annolet_main() {
   console.log('hello world annolet');
   var temp = get_phonetics("between");
-  console.log(temp);
+  console.log(phonetic_trans);
   console.log('some test string');
     annolet_createContainer();
     document.onclick = function(event) {
