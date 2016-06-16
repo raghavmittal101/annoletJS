@@ -124,7 +124,7 @@ function set_function(xpath)
   else
   {
     console.log("returned without change");
-    return;
+    set_function(xpath);
   }
 }
 
