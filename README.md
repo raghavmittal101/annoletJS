@@ -7,7 +7,7 @@
 ### How to set up? ###
 ####Setting up repository####
 * To setup this repository, 
-* go to terminal and execute `git clone https://raghav_mittal@bitbucket.org/raghav_mittal/annolet.git`
+* go to terminal and execute `git clone https://github.com/SSS-Studio-development/annoletjs.git`
 * Now the repo is cloned on to your local machine.
 
 ####Setting up the Code####
