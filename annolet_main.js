@@ -20,7 +20,7 @@ function annolet_createContainer() {
     annolet_container.id = 'annolet-container';
     body.appendChild(annolet_container);
     //injecting html code
-    document.getElementById('annolet-container').innerHTML = "<ul class=annolet-tools-menu><span style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span style='color:grey;'>|</span><li class=annolet-tools-menu-item id=login-btn>login</li><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >annotate</li><li class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li><li class=annolet-tools-menu-item id=save-btn>save</li><li class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>"; //HTML to create a list of options
+    document.getElementById('annolet-container').innerHTML = "<ul class=annolet-tools-menu><span style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span style='color:grey;'>|</span><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >phonetic</li><li class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li><li class=annolet-tools-menu-item id=save-btn>save</li><li class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>"; //HTML to create a list of options
 }
 
 // function to get Xpath to passed element
@@ -87,8 +87,9 @@ function annolet_main() {
         var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
-        } else if (annolet_btn === 2) {
-            anno_annotate(xpath);  //for now this function not available
+        }
+      else if (annolet_btn === 2) {
+            anno_phonetic(xpath); 
         }
     };
 }
@@ -111,10 +112,29 @@ function annolet_pushToStack(xpath, anno_content) {
     annolet_stack.push(annolet_obj);
 }
 
+
+
 //function for highlighting element
 function anno_highlight(xpath) {
+  clicked_element = anno_getElementByXpath(xpath);
     //if element is already highlighted
-  if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
+    if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
+        console.log('not permitted');
+    }
+    else {
+      // hightlight selected element and store it
+      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+      annolet_insertIntoObject(xpath); // storing into object
+    }
+}
+
+
+
+
+//function for getting phonetic
+function anno_phonetic(xpath) {
+    //if element is already translated
+  if (anno_getElementByXpath(xpath).id != "phonetic" || !(anno_getElementByXpath(xpath).id)) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
     get_phonetics(text_to_translate);
     var timer = window.setInterval
@@ -127,6 +147,7 @@ function anno_highlight(xpath) {
           $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
           phonetic_trans = "default_value";
           window.clearInterval(timer);
+          $j(anno_getElementByXpath(xpath)).wrapInner("<span id='phonetic'></span>");
         }
         else
         {
@@ -135,20 +156,8 @@ function anno_highlight(xpath) {
       }
       ,1000
     );
-    $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
-
-        annolet_pushToStack(xpath);
-    } else {
-        console.log('highlighted already');
-    }
-}
-
-function anno_annotate(xpath){
-if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
-        //adding orange coloured border around selected part.
-        $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='border:solid 1px orange;'></span>");
-        annolet_pushToStack(xpath);
-    } else {
-        console.log('highlighted already');
+  }
+  else {
+        console.log('already translated');
     }
 }
