@@ -49,12 +49,12 @@ function anno_getElementByXpath(xpath) {
     return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
-var xhr;
-var pflag;
+
+var phonetic_trans = "default_value";
 
 function get_phonetics(str){
   
-  xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
   xhr.open("POST", "//localhost:5000/translate", true); // enter the actual URL for web-service here
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
@@ -65,7 +65,6 @@ function get_phonetics(str){
 
   function processRequest(e)
   {
-    pflag = 1;
     if (xhr.readyState == 4)
     {
       console.log('pho trans set');
@@ -112,10 +111,6 @@ function annolet_pushToStack(xpath, anno_content) {
     annolet_stack.push(annolet_obj);
 }
 
-function set_function(xpath)
-{
-}
-
 //function for highlighting element
 function anno_highlight(xpath) {
     //if element is already highlighted
@@ -126,10 +121,11 @@ function anno_highlight(xpath) {
     (
       function ()
       {
-        if(typeof phonetic_trans !== 'undefined')
+        if(typeof phonetic_trans !== "default_value")
         {
           console.log("text changing");
           $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
+          phonetic_trans = "default_value";
           window.clearInterval(timer);
         }
         else
