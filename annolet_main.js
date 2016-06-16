@@ -58,6 +58,7 @@ function anno_getElementByXpath(xpath) {
 function annolet_main() {
     disableAllLinks()  // it will disable all the links present in webpage iteratively
     annolet_createContainer();
+    annolet_iterateElements();
     document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
@@ -80,11 +81,10 @@ function disableAllLinks(){
 }
 
 //function to iterate through all elements
-function iterateElements(){
-  var elemets = document.getElementsByTagName('*');
-  var el=0;
-  for el in elements{
-    elements[el].wrap("<div class='annolet_init'></span>")
+function annolet_iterateElements(){
+  var tags = document.getElementsByTagName('*');
+  for(var i=0; i<=tags.length; i++){
+    tags[i].wrap("<div class='annolet_init'></span>")
   }
 }
 
