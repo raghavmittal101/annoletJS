@@ -114,7 +114,7 @@ function annolet_pushToStack(xpath, anno_content) {
 
 function set_function(xpath)
 {
-  if(phonetic_trans !== 'undefined')
+  if(typeof phonetic_trans !== 'undefined')
   {
     console.log("text changing");
     $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
@@ -133,8 +133,6 @@ function anno_highlight(xpath) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
     get_phonetics(text_to_translate);
     var timer = window.setInterval(set_function(xpath),1000);
-     // hightlight selected element, calling function
-    
     $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
         annolet_pushToStack(xpath);
