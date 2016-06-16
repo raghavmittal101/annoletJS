@@ -77,7 +77,7 @@ function get_phonetics(str){
 //main function which will execute other functions
 function annolet_main() {
   console.log('hello world annolet');
-  var temp = get_phonetics("between");
+  get_phonetics("between");
   console.log(phonetic_trans);
   console.log('some test string');
   annolet_createContainer();
@@ -118,10 +118,11 @@ function annolet_pushToStack(xpath, anno_content) {
 function anno_highlight(xpath) {
     //if element is already highlighted
   if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
-    console.log("about to highlight");
-    $j(anno_getElementByXpath(xpath)).text( "new phonetic translated text");           // hightlight selected element, calling function
-    console.log(phonetic_trans);
-      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+    var temp = $j(anno_getElementByXpath(xpath)).html();
+    var ans = get_phonetics(temp);
+    $j(anno_getElementByXpath(xpath)).text(ans); // hightlight selected element, calling function
+    
+    $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
 
         annolet_pushToStack(xpath);
     } else {
