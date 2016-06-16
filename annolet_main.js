@@ -101,7 +101,7 @@ function annolet_insertIntoObject(xpath) {
 function tagObject(xpath, obj){
   tagName = prompt('tagName:');
   tagInfo = prompt('tagInfo');
-  obj.tags.append(
+  obj.tags.push(
     {
       id: i++,
       tagName: tagName,
