@@ -80,7 +80,6 @@ function disableAllLinks(){
 }
 
 //function to store tags into JSON object.
-var i = 1; //counter for id
 function annolet_insertIntoObject(xpath) {
   if(!annolet_object){
     authorname = prompt('enter authorname');
@@ -102,7 +101,6 @@ function tagObject(xpath, obj){
   tagInfo = prompt('tagInfo');
   obj.tags.append(
     {
-      id: i++,
       tagName: tagName,
       tagInfo: tagInfo,
       xpath: xpath
