@@ -142,7 +142,7 @@ function disableAllLinks(){
     and array of xpaths with tagName and tagType(like language, point of view). Everytime user clicks element, this function will run, so
     as to assure that all the work done is saved for retreival in future. Xpath is passed through it as argument. Function tagObject is used
     to push tagging information to tags array.
-#+NAME: annolet_insertIntoObject(xpath)
+#+NAME: annolet_insertIntoObject
 #+begin_src js :tangle yes
 //function to store tags into JSON object.
 var annolet_obj = 0; //will save jason objects
