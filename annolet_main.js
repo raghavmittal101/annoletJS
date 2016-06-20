@@ -82,7 +82,7 @@ function get_languagetrans(str,fr,to){
   xhr.open("POST", "//localhost:5000/language-translive", true); // replace localhost afterwards
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-  xhr.send(JSON.stringify({"sentence":str,"from-language":fr,"to-language",to}));
+  xhr.send(JSON.stringify({"sentence":str,"from-language":fr,"to-language":to}));
 
   xhr.onreadystatechange = processRequest;
 
