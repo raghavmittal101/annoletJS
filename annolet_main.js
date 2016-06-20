@@ -20,7 +20,7 @@ function annolet_createContainer() {
     annolet_container.id = 'annolet-container';
     body.appendChild(annolet_container);
     //injecting html code
-    document.getElementById('annolet-container').innerHTML = "<ul class=annolet-tools-menu><span style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span style='color:grey;'>|</span><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >phonetic</li><li class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li><li class=annolet-tools-menu-item id=save-btn>save</li><li class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>"; //HTML to create a list of options
+    document.getElementById('annolet-container').innerHTML = "<ul class=annolet-tools-menu><span style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span style='color:grey;'>|</span><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >language</li><li class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li><li class=annolet-tools-menu-item id=save-btn>save</li><li class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>"; //HTML to create a list of options
 }
 
 // function to get Xpath to passed element
@@ -51,11 +51,12 @@ function anno_getElementByXpath(xpath) {
 
 
 var phonetic_trans = "default_value";
+var language_trans = "default_value";
 
 function get_phonetics(str){
   
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "//localhost:5000/translate", true); // enter the actual URL for web-service here
+  xhr.open("POST", "//localhost:5000/phonetic-trans", true); // replace localhost afterwards.
   xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
   xhr.send(JSON.stringify({"sentence":str}));
@@ -74,6 +75,31 @@ function get_phonetics(str){
 
 }
 
+
+function get_languagetrans(str,fr,to){
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "//localhost:5000/language-translive", true); // replace localhost afterwards
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+  xhr.send(JSON.stringify({"sentence":str}));
+  xhr.send(JSON.stringify({"from-langage":fr}));
+  xhr.send(JSON.stringify({"to-language":to}));
+
+  xhr.onreadystatechange = processRequest;
+
+  function processRequest(e)
+  {
+    if (xhr.readyState == 4)
+    {
+      console.log('language trans set');
+      language_trans = xhr.responseText;
+    }
+  }
+
+}
+
+
 //main function which will execute other functions
 function annolet_main() {
   console.log('hello world annolet');
@@ -89,7 +115,7 @@ function annolet_main() {
             anno_highlight(xpath);
         }
       else if (annolet_btn === 2) {
-            anno_phonetic(xpath); 
+            anno_language(xpath); 
         }
     };
 }
@@ -147,7 +173,37 @@ function anno_phonetic(xpath) {
           $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
           phonetic_trans = "default_value";
           window.clearInterval(timer);
-          $j(anno_getElementByXpath(xpath)).wrapInner("<span id='phonetic'></span>");
+        }
+        else
+        {
+          console.log("returned without change");
+        }
+      }
+      ,1000
+    );
+  }
+  else {
+        console.log('already translated');
+    }
+}
+
+
+//function for getting phonetic
+function anno_language(xpath) {
+  //if element is already translated
+  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {
+    var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
+    get_languagetrans(text_to_translate,'en','gu');
+    var timer = window.setInterval
+    (
+      function ()
+      {
+        if(typeof language_trans !== "default_value")
+        {
+          console.log("text changing");
+          $j(anno_getElementByXpath(xpath)).text(language_trans);
+          language_trans = "default_value";
+          window.clearInterval(timer);
         }
         else
         {
