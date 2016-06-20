@@ -131,8 +131,6 @@ function anno_highlight(xpath) {
 //-------------------------------------------------------------------
 //function to add sticky note kind of notediv
 function anno_addNote(){
-  spawn();
-
       var markup =
         '<div class="annolet_box annolet_note annolet_background-gray">' +
         '<div class="annolet_box-header">' +
@@ -141,25 +139,25 @@ function anno_addNote(){
         '</div><textarea class="annolet_note-text"></textarea></div>';
 
     var spawn = function () {
-        $("body").append(makeNote($(markup)));
+        $j("body").append(makeNote($j(markup)));
     };
 
     var remove = function () {
-        $(this).parent().parent().remove();
+        $j(this).parent().parent().remove();
     };
 
     var resizeTextArea = function () {
-        var self = $(this);
+        var self = $j(this);
         var spaceToGrab = 60;
         self.find('.annolet_note-text').height(self.height() - 45);
     };
 
     var hideButtons = function (element) {
-        $(element).find("a").hide();
+        $j(element).find("a").hide();
     };
 
     var showButtons = function (element) {
-        $(element).find("a").show();
+        $j(element).find("a").show();
     };
 
     var save = function (id, value, position) {
@@ -179,10 +177,10 @@ function anno_addNote(){
 
         $text = $note.find('textarea');
         $text.focusout(function (e) {
-            save($(this).oid, $(this).val(), $(this).parent().position());
+            save($j(this).oid, $j(this).val(), $j(this).parent().position());
         });
         $note.click(function () {
-            $(this).find('textarea').focus();
+            $j(this).find('textarea').focus();
         });
 
         $note.mouseover(function () {
@@ -199,7 +197,9 @@ function anno_addNote(){
         return $note;
     };
 
-    $(".annoet_note").each(function (i, e) {
+    $j(".annoet_note").each(function (i, e) {
         makeNote(e);
     });
+
+      spawn();
 }
