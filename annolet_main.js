@@ -1,5 +1,5 @@
 
-var $j = jQuery.noConflict();
+//var $ = jQuery.noConflict();
 
 annolet_main();  //excecuting main function
 
@@ -124,7 +124,7 @@ function anno_highlight(xpath) {
     }
     else {
       // hightlight selected element and store it
-      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+      $(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
       annolet_insertIntoObject(xpath); // storing into object
     }
 }
@@ -139,25 +139,25 @@ function anno_addNote(){
         '</div><textarea class="annolet_note-text"></textarea></div>';
 
     var spawn = function () {
-        $j("body").append(makeNote($j(markup)));
+        $("body").append(makeNote($(markup)));
     };
 
     var remove = function () {
-        $j(this).parent().parent().remove();
+        $(this).parent().parent().remove();
     };
 
     var resizeTextArea = function () {
-        var self = $j(this);
+        var self = $(this);
         var spaceToGrab = 60;
         self.find('.annolet_note-text').height(self.height() - 45);
     };
 
     var hideButtons = function (element) {
-        $j(element).find("a").hide();
+        $(element).find("a").hide();
     };
 
     var showButtons = function (element) {
-        $j(element).find("a").show();
+        $(element).find("a").show();
     };
 
     var save = function (id, value, position) {
@@ -167,7 +167,7 @@ function anno_addNote(){
     };
 
     var makeNote = function (element) {
-        var $note = $j(element);
+        var $note = $(element);
         $note.resizable({
             handles: "se"
         });
@@ -177,10 +177,10 @@ function anno_addNote(){
 
         $text = $note.find('textarea');
         $text.focusout(function (e) {
-            save($j(this).oid, $j(this).val(), $j(this).parent().position());
+            save($(this).oid, $(this).val(), $(this).parent().position());
         });
         $note.click(function () {
-            $j(this).find('textarea').focus();
+            $(this).find('textarea').focus();
         });
 
         $note.mouseover(function () {
@@ -197,7 +197,7 @@ function anno_addNote(){
         return $note;
     };
 
-    $j(".annoet_note").each(function (i, e) {
+    $(".annoet_note").each(function (i, e) {
         makeNote(e);
     });
 
