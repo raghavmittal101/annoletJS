@@ -115,8 +115,7 @@ function annolet_main() {
       else if (annolet_btn === 2) {
             anno_language(xpath); 
       }
-      else if (annolet_btn == 3)
-      {
+      else if (annolet_btn == 3)      {
         anno_phonetic(xpath);
       }
     };
