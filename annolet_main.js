@@ -24,7 +24,7 @@ function annolet_createContainer() {
     "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
     "<span id='annolet' style='color:grey;'>|</span>"+
     "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>TagIt!</li>"+
-    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=2;'>Highlight</li>"+
+    /*"<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=2;'>Highlight</li>"+*/
     "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=3;'>Phonetics</li>"+
     "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=4;'>Translation</li>"+
     "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
@@ -108,6 +108,11 @@ function get_languagetrans(str,fr,to){
 
 //function for getting phonetic
 function anno_phonetic(xpath) {
+  clicked_element = anno_getElementByXpath(xpath);
+  if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
+      console.log('not permitted');
+  }
+  else {
     //if element is already translated
   if (anno_getElementByXpath(xpath).id != "phonetic" || !(anno_getElementByXpath(xpath).id)) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
@@ -134,11 +139,18 @@ function anno_phonetic(xpath) {
   else {
         console.log('already translated');
     }
+  }
 }
 
 
 //function for getting phonetic
 function anno_language(xpath) {
+  clicked_element = anno_getElementByXpath(xpath);
+  //if element is already highlighted
+  if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
+      console.log('not permitted');
+  }
+  else {
   //if element is already translated
   if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
@@ -165,6 +177,7 @@ function anno_language(xpath) {
   else {
         console.log('already translated');
     }
+  }
 }
 
 //------------------------------------------------------------------------
@@ -234,7 +247,7 @@ function tagObject(xpath, obj){
 
 //function for highlighting element
 function anno_highlight(xpath) {
-    clicked_element = anno_getElementByXpath(xpath)
+    clicked_element = anno_getElementByXpath(xpath);
     //if element is already highlighted
     if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
         console.log('not permitted');
