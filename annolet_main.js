@@ -164,7 +164,7 @@ function tagObject(xpath, obj){
 
 //function for highlighting element
 function anno_highlight(xpath) {
-<<<<<<< HEAD
+
   clicked_element = anno_getElementByXpath(xpath);
     //if element is already highlighted
     if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
@@ -249,3 +249,5 @@ function anno_language(xpath) {
       annolet_insertIntoObject(xpath); // storing into object
     }
 }
+
+  
