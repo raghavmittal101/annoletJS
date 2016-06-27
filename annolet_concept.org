@@ -5,7 +5,7 @@
   - The source is written in JavaScript and jQuery 1.7 is used in it.
   - *Release 0*
 
-  To run this program call =annolet_main()= function.
+  To run this program you need to need to setup flask server from [[https://github.com/SSS-Studio-development/web-services][here]]. After server is successfully running go to [[https://rawgit.com/SSS-Studio-development/annoletjs/master/annolet.html][Annolet!]].
 ------------------------------
 
 ** Use of =jQuery.noConflict()=
@@ -334,7 +334,7 @@ function anno_language(xpath) {
   }
   else {
   //if element is already translated
-  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {mark
+  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
     get_languagetrans(text_to_translate,'en','hi');
     var timer = window.setInterval
