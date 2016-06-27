@@ -20,7 +20,12 @@ function annolet_createContainer() {
     annolet_container.id = 'annolet-container';
     body.appendChild(annolet_container);
     //injecting html code
-    document.getElementById('annolet-container').innerHTML = "<ul class=annolet-tools-menu><span style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span style='color:grey;'>|</span><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >language</li><li class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li><li class=annolet-tools-menu-item id=save-btn>save</li><li class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=3;' >phonetic</li></ul>"; //HTML to create a list of options
+    document.getElementById('annolet-container').innerHTML = "<ul id='annolet' class=annolet-tools-menu>"+
+    "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
+    "<span id='annolet' style='color:grey;'>|</span>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>TagIt!</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
+    "</ul>"; //HTML to create a list of options
 }
 
 // function to get Xpath to passed element
@@ -108,16 +113,11 @@ function annolet_main() {
         } // for IE
         var target = 'target' in event ? event.target : event.srcElement; // for IE
         var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
-        var xpath = anno_getXpathTo(target);
-        if (annolet_btn === 1) {
-            anno_highlight(xpath);
-        }
-      else if (annolet_btn === 2) {
-            anno_language(xpath); 
+      var xpath = anno_getXpathTo(target);
+      if (annolet_btn === 1) {
+        anno_highlight(xpath);
       }
-      else if (annolet_btn == 3)      {
-        anno_phonetic(xpath);
-      }
+
     };
 }
 
