@@ -2,13 +2,11 @@
 #+AUTHOR: Raghav Mittal
 #+EMAIL:raghav.mittal@st.niituniversity.in
 
-  The source is written in JavaScript and jQuery 1.7 is used in it. I am trying to make it more scalable and robust, 
-  so that it can be easily integrated with other projects.
+  - The source is written in JavaScript and jQuery 1.7 is used in it.
+  - *Release 0*
 
   To run this program call =annolet_main()= function.
 ------------------------------
-
-** Requirements
 
 ** Use of =jQuery.noConflict()=
    To make the program more robust and avoid clash between variables with that of running website
@@ -51,12 +49,18 @@ function annolet_createContainer() {
     "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
     "<span id='annolet' style='color:grey;'>|</span>"+
     "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>TagIt!</li>"+
+    /*"<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=2;'>Highlight</li>"+*/
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=3;'>Phonetics</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=4;'>Translation</li>"+
     "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
     "</ul>"; //HTML to create a list of options
 }
 #+end_src
 #+begin_verse
     _The container div contains following options_
+   - /Phonetics/: when a DOM node is clicked, it is replaced with its phonetic representation. On click =annolet_btn= is changed to 3.
+   - /Translation/: when a DOM node is clicked, it is replaced with its Hindi translation. On click =annolet_btn= is changed to 4.
+   - /Highlight/: to highlight the given node element. On click =annolet_btn= is chaned to 2. This feature is disabled for now. Will b
    - /tagit/: to start tagging DOM elements. It will also highlight clicked element. On click =annolet_btn= is changed to 1. 
    - /exit/: to stop all functions and remove container from body. On click =annolet_btn= is changed to 0.
 #+end_verse
@@ -99,8 +103,8 @@ function anno_getElementByXpath(xpath) {
 }
 #+end_src 
 --------------------------------
-** Selecting, highlighting and tagging an element
-*** Function =annolet_main()=
+** Functions
+*** =annolet_main()=
    =annolet_main()= is main function which will on execution calls =annolet_createContainer()= and monitors document
    for mouse clicks. On click, clicked element is selected as target which is passed through
    function =annolet_getXpath= and returned Xpath is stored in variable =xpath=.
@@ -127,7 +131,7 @@ function annolet_main() {
 
 #+end_src
    --------------------------------
-*** Function =disableAllLinks()=
+*** =disableAllLinks()=
 This function iterates through all the links (=<a>= tags) and disable them so 
 that user will not go out of webpage while annotating webpage.
 #+NAME: disableAllLinks
@@ -140,7 +144,7 @@ function disableAllLinks(){
     }
 }
 #+end_src
-*** Function =annolet_insertIntoObject(xpath)=
+*** =annolet_insertIntoObject(xpath)=
     This function will create an object called =annolet_obj= which will contain authorname(username), url(which is annotated) 
     and array of xpaths with tagName and tagType(like language, point of view). Everytime user clicks element, this function will run, so
     as to assure that all the work done is saved for retreival in future. Xpath is passed through it as argument. Function tagObject is used
@@ -165,7 +169,7 @@ function annolet_insertIntoObject(xpath) {
 }
 #+end_src
 ------------------------------
-*** Function =function tagObject(xpath, obj)= 
+*** =tagObject(xpath, obj)= 
     This function asks user for tagging information and push it to tags array of =annolet_obj=.
 #+NAME: tagObject
 #+begin_src js :tangle yes
@@ -181,7 +185,7 @@ function tagObject(xpath, obj){
   )
 }
 #+end_src
-*** Function =anno_highlight(xpath)=
+*** =anno_highlight(xpath)=
     This function takes =xpath= as argument. Xpath of an element is passed to =anno_getElementByXpath(xpath)=
     which returns element in obect form. Then that object is selected using jQuery and using =wrapInner()= function 
     of jQuery it is wrapped inside =<span>= with id 'mark' and yellow background. Another function that is 
@@ -204,7 +208,7 @@ function anno_highlight(xpath) {
 }
 #+end_src   
 ---------------------------------
-*** Function =anno_annotate()=
+*** =anno_annotate()=
 **** /not complete/
 In this function I will use some functionality of =annolet_highlight()= function, then another function which will create 
 a div containing =textarea=. This box will add to fixed div which will slide up. There will be two options in that box, 
@@ -212,7 +216,7 @@ a div containing =textarea=. This box will add to fixed div which will slide up.
 2.cancel. 
 On clicking save, the content variable will become equal to the textarea value and then =annolet_pushToStack()= will be called. Right now there is no method for retrieval of annotations.
 #+NAME:anno_annotate
-#+begin_src js :tangle yes
+#+begin_src js
 function anno_annotate(xpath){
 if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
         //adding orange coloured border around selected part.
@@ -224,3 +228,137 @@ if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath
 }
 #+end_src
 ------
+*** =get_phonetics=
+#+name: get phonetics
+#+begin_src js :tangle yes
+var phonetic_trans = "default_value";
+var language_trans = "default_value";
+
+function get_phonetics(str){
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "//localhost:5000/phonetic-trans", true); // replace localhost afterwards.
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+  xhr.send(JSON.stringify({"sentence":str}));
+
+
+  xhr.onreadystatechange = processRequest;
+
+  function processRequest(e)
+  {
+    if (xhr.readyState == 4)
+    {
+      console.log('pho trans set');
+      phonetic_trans = xhr.responseText;
+    }
+  }
+
+}
+#+end_src
+
+*** =get_languagetrans()=
+#+name: get_languages
+#+begin_src js :tangle yes
+function get_languagetrans(str,fr,to){
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "//localhost:5000/language-translive", true); // replace localhost afterwards
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+  xhr.send(JSON.stringify({"sentence":str,"from-language":fr,"to-language":to}));
+
+  xhr.onreadystatechange = processRequest;
+
+  function processRequest(e)
+  {
+    if (xhr.readyState == 4)
+    {
+      console.log('language trans set');
+      language_trans = xhr.responseText;
+    }
+  }
+
+}
+#+end_src
+
+*** =anno_phonetic()=
+#+name: phonetic_translation
+#+begin_src js :tangle yes
+//function for getting phonetic
+function anno_phonetic(xpath) {
+  clicked_element = anno_getElementByXpath(xpath);
+  if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
+      console.log('not permitted');
+  }
+  else {
+    //if element is already translated
+  if (anno_getElementByXpath(xpath).id != "phonetic" || !(anno_getElementByXpath(xpath).id)) {
+    var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
+    get_phonetics(text_to_translate);
+    var timer = window.setInterval
+    (
+      function ()
+      {
+        if(typeof phonetic_trans !== "default_value")
+        {
+          console.log("text changing");
+          $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
+          phonetic_trans = "default_value";
+          window.clearInterval(timer);
+        }
+        else
+        {
+          console.log("returned without change");
+        }
+      }
+      ,1000
+    );
+  }
+  else {
+        console.log('already translated');
+    }
+  }
+}
+#+end_src
+
+*** =anno_language()=
+#+name: language_translation
+#+begin_src js :tangle yes
+//function for getting phonetic
+function anno_language(xpath) {
+  clicked_element = anno_getElementByXpath(xpath);
+  //if element is already highlighted
+  if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
+      console.log('not permitted');
+  }
+  else {
+  //if element is already translated
+  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {mark
+    var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
+    get_languagetrans(text_to_translate,'en','hi');
+    var timer = window.setInterval
+    (
+      function ()
+      {
+        if(typeof language_trans !== "default_value")
+        {
+          console.log("text changing");
+          $j(anno_getElementByXpath(xpath)).text(language_trans);
+          language_trans = "default_value";
+          window.clearInterval(timer);
+        }
+        else
+        {
+          console.log("returned without change");
+        }
+      }
+      ,1000
+    );
+  }
+  else {
+        console.log('already translated');
+    }
+  }
+}
+#+end_src
