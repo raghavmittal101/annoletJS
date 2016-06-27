@@ -105,8 +105,9 @@ function get_languagetrans(str,fr,to){
 
 //main function which will execute other functions
 function annolet_main() {
-  console.log('hello world annolet');
   annolet_createContainer();
+    disableAllLinks()  // it will disable all the links present in webpage iteratively
+    annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
@@ -121,28 +122,49 @@ function annolet_main() {
     };
 }
 
-//function to push objects to a stack.
-var i = 1; //counter for id
-var annolet_stack = []; //object will be pushed to this
-function annolet_pushToStack(xpath, anno_content) {
-    if (!anno_content) {
-        anno_content = null;
-    } //initializing anno_content to null if highlighting done.
-    var annolet_obj = {
-        authorname: 'raghav',
-        id: i++,
-        type: annolet_btn, //1 for highlight, 2 for annotation.
-        content: anno_content, //would be null if highlighting is done only.
-        xpath: xpath
+// funtion to disable all links
+function disableAllLinks(){
+    var anchors = document.getElementsByTagName("a");
+    for (var i = 0; i < anchors.length; i++) {
+        anchors[i].onclick = function() {return(false);};
+    }
+}
+
+//function to store tags into JSON object.
+var annolet_obj = 0; //will save jason objects
+function annolet_insertIntoObject(xpath) {
+  if(annolet_obj==0){
+    authorname = prompt('enter authorname');
+    annolet_obj = {
+        url: window.location.href,
+        authorname: authorname,
+        tags : []
     };
-    // pushing data to stack
-    annolet_stack.push(annolet_obj);
+    tagObject(xpath, annolet_obj);
+  }
+  else {
+    tagObject(xpath, annolet_obj);
+  }
+}
+
+// function for creation of objects
+function tagObject(xpath, obj){
+  tagName = prompt('tagName:');
+  tagInfo = prompt('tagInfo');
+  obj.tags.push(
+    {
+      tagName: tagName,
+      tagInfo: tagInfo,
+      xpath: xpath
+    }
+  )
 }
 
 
 
 //function for highlighting element
 function anno_highlight(xpath) {
+<<<<<<< HEAD
   clicked_element = anno_getElementByXpath(xpath);
     //if element is already highlighted
     if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
@@ -216,5 +238,14 @@ function anno_language(xpath) {
   }
   else {
         console.log('already translated');
+    clicked_element = anno_getElementByXpath(xpath)
+    //if element is already highlighted
+    if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
+        console.log('not permitted');
+    }
+    else {
+      // hightlight selected element and store it
+      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+      annolet_insertIntoObject(xpath); // storing into object
     }
 }

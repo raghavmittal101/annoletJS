@@ -7,12 +7,6 @@
 
   To run this program call =annolet_main()= function.
 ------------------------------
-** Motivation/Background
-** Design Idea
-** Functionality
-** Detailed Design
-** Function Test/Unit Test
-
 ** Use of =jQuery.noConflict()=
    To make the program more robust and avoid clash between variables with that of running website
    jQuery noConflict() is used and normal '$' selector is changed with '$j'.
@@ -21,7 +15,7 @@
      var $j = jQuery.noConflict();
    #+end_src
 --------------------------
-** COMMENT calling annolet_main() function
+** Calling annolet_main() function
 #+begin_src js :tangle yes :exports none
    annolet_main();
 #+end_src
@@ -38,7 +32,8 @@ var annolet_btn;
 function annolet_createContainer() {
     // appending a CSS stylesheet to head of webpage
     var link = document.createElement('link');
-    link.href = "//ba8fbd5823dec19f2a925b874342f02f325c5581.googledrive.com/host/0B0c01D4InsAOflQ0TUhidTJPUTNycmpyR0IwQ2R1RzBnSVE0SVNzLUxPeHcxOEZVM2RISzg/final/control-menu.css?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
+    // using rawgit.com MaxCDN.. files directly linked to git repo 'annoletjs/master'
+    link.href = "https://cdn.rawgit.com/SSS-Studio-development/annoletjs/master/annolet.css"; //random version number removed bcoz some browser take it as text file and not as CSS.
     link.type = "text/css";
     link.rel = "stylesheet";
     document.getElementsByTagName('head')[0].appendChild(link);
@@ -49,16 +44,17 @@ function annolet_createContainer() {
     annolet_container.id = 'annolet-container';
     body.appendChild(annolet_container);
     //injecting html code
-    document.getElementById('annolet-container').innerHTML = "<ul class=annolet-tools-menu><span style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span style='color:grey;'>|</span><li class=annolet-tools-menu-item id=login-btn>login</li><li class=annolet-tools-menu-item id=addnote_btn onclick='annolet_btn=2;' >annotate</li><li class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>highlight</li><li class=annolet-tools-menu-item id=save-btn>save</li><li class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>"; //HTML to create a list of options
+    document.getElementById('annolet-container').innerHTML = "<ul id='annolet' class=annolet-tools-menu>"+
+    "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
+    "<span id='annolet' style='color:grey;'>|</span>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>TagIt!</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
+    "</ul>"; //HTML to create a list of options
 }
 #+end_src
 #+begin_verse
     _The container div contains following options_
-   - /login/: to let the user login, so highlights and annotations done can be saved permanently.On click value of =annolet_btn= is changed to 1.
-   - /highlight/: to highlight elements. On click value of =annolet_btn= is changed to 2.
-   - /annotate/: to highlight and add note to element. On click value of =annolet_btn= is changed to 3.
-   - /publish/: to save all work done in a session. On click value of =annolet_btn= is changed to 4.
-   - /cancel/: to dump all the work done. On click value of =annolet_btn= is changed to 5.
+   - /tagit/: to start tagging DOM elements. It will also highlight clicked element. On click =annolet_btn= is changed to 1. 
    - /exit/: to stop all functions and remove container from body. On click =annolet_btn= is changed to 0.
 #+end_verse
 ---------------------------------------
@@ -100,18 +96,18 @@ function anno_getElementByXpath(xpath) {
 }
 #+end_src 
 --------------------------------
-** Selecting, highlighting and annotating an element
+** Selecting, highlighting and tagging an element
 *** Function =annolet_main()=
    =annolet_main()= is main function which will on execution calls =annolet_createContainer()= and monitors document
    for mouse clicks. On click, clicked element is selected as target which is passed through
    function =annolet_getXpath= and returned Xpath is stored in variable =xpath=.
    =annolet_main()= function always check for the current value of =annolet_btn= whenever user clicks.
-   On the bases of this value, preffered function =anno_highlight()= for 1 or =anno_annotate()= for 2
-   is called.
+   On the bases of this value, preffered function =anno_highlight()= for 1 is called. More option will be added later.
 #+NAME:annolet_main()
 #+begin_src js :tangle yes
 //main function which will execute other functions
 function annolet_main() {
+    disableAllLinks()  // it will disable all the links present in webpage iteratively
     annolet_createContainer();
     document.onclick = function(event) {
         if (event === undefined) {
@@ -119,61 +115,88 @@ function annolet_main() {
         } // for IE
         var target = 'target' in event ? event.target : event.srcElement; // for IE
         var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
-        var xpath = anno_getXpathTo(target);        
+        var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
-        } else if (annolet_btn === 2) {
-            console.log('not available'); //for now this function not available
         }
     };
 }
 
 #+end_src
    --------------------------------
-*** Function =annolet_pushToStack()=
-    This function will create an object called =annolet_obj= which will contain username, id, type(annotation or highlighting),
-    content(if annotation is done) and xpath. Everytime user creates annotation or do highlighting, this function will run, so
-    as to assure that all the work done is saved for retreival in future.'type' is defined to make it easy to build type 
-    selective functions in future.
-#+NAME: annolet_pushToStack
+*** Function =disableAllLinks()=
+This function iterates through all the links (=<a>= tags) and disable them so 
+that user will not go out of webpage while annotating webpage.
+#+NAME: disableAllLinks
 #+begin_src js :tangle yes
-//function to push objects to a stack.
-var i = 1; //counter for id
-var annolet_stack = []; //object will be pushed to this
-function annolet_pushToStack(xpath, anno_content) {
-    if (!anno_content) {
-        anno_content = null;
-    } //initializing anno_content to null if highlighting done.
-    var annolet_obj = {
-        authorname: 'raghav',
-        id: i++,
-        type: annolet_btn, //1 for highlight, 2 for annotation.
-        content: anno_content, //would be null if highlighting is done only.
-        xpath: xpath
+// funtion to disable all links
+function disableAllLinks(){
+    var anchors = document.getElementsByTagName("a");
+    for (var i = 0; i < anchors.length; i++) {
+        anchors[i].onclick = function() {return(false);};
+    }
+}
+#+end_src
+*** Function =annolet_insertIntoObject(xpath)=
+    This function will create an object called =annolet_obj= which will contain authorname(username), url(which is annotated) 
+    and array of xpaths with tagName and tagType(like language, point of view). Everytime user clicks element, this function will run, so
+    as to assure that all the work done is saved for retreival in future. Xpath is passed through it as argument. Function tagObject is used
+    to push tagging information to tags array.
+#+NAME: annolet_insertIntoObject
+#+begin_src js :tangle yes
+//function to store tags into JSON object.
+var annolet_obj = 0; //will save jason objects
+function annolet_insertIntoObject(xpath) {
+  if(annolet_obj==0){
+    authorname = prompt('enter authorname');
+    annolet_obj = {
+        url: window.location.href,
+        authorname: authorname,
+        tags : []
     };
-    // pushing data to stack
-    annolet_stack.push(annolet_obj);
+    tagObject(xpath, annolet_obj);
+  }
+  else {
+    tagObject(xpath, annolet_obj);
+  }
 }
 #+end_src
 ------------------------------
-*** Function =anno_highlight()=
-    This function takes two arguments as parameters, =xpath= and function =annolet_pushToStack()=.
-    Xpath of an element is passed to =anno_getElementByXpath(xpath)= which returns element in obect form.
-    Then that object is selected using jQuery and using =wrapInner()= function of jQuery it is wrapped 
-    inside =<span>= with id 'mark' and yellow background. Another function that is =annolet_pushToStack()=
-    creates an object and push it to object array.So it can be saved for future to a server.
-    =annolet_pushToStack()= will be discussed later.
+*** Function =function tagObject(xpath, obj)= 
+    This function asks user for tagging information and push it to tags array of =annolet_obj=.
+#+NAME: tagObject
+#+begin_src js :tangle yes
+function tagObject(xpath, obj){
+  tagName = prompt('tagName:');
+  tagInfo = prompt('tagInfo');
+  obj.tags.push(
+    {
+      tagName: tagName,
+      tagInfo: tagInfo,
+      xpath: xpath
+    }
+  )
+}
+#+end_src
+*** Function =anno_highlight(xpath)=
+    This function takes =xpath= as argument. Xpath of an element is passed to =anno_getElementByXpath(xpath)=
+    which returns element in obect form. Then that object is selected using jQuery and using =wrapInner()= function 
+    of jQuery it is wrapped inside =<span>= with id 'mark' and yellow background. Another function that is 
+    =annolet_insertIntoObject()= creates an object and push it to object array.So it can be saved for future to a 
+    server. It also prevents annolet container from highlighting itself.
 #+NAME: anno_highlight
 #+begin_src js :tangle yes
 //function for highlighting element
 function anno_highlight(xpath) {
+    clicked_element = anno_getElementByXpath(xpath)
     //if element is already highlighted
-    if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath).id)) {
-        //changing background of selected element to yellow.
-        $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
-        annolet_pushToStack(xpath);
-    } else {
-        console.log('highlighted already');
+    if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
+        console.log('not permitted');
+    }
+    else {
+      // hightlight selected element and store it
+      $j(anno_getElementByXpath(xpath)).wrapInner("<span id='mark' style='background:yellow;'></span>");
+      annolet_insertIntoObject(xpath); // storing into object
     }
 }
 #+end_src   
@@ -197,4 +220,4 @@ if (anno_getElementByXpath(xpath).id != "mark" || !(anno_getElementByXpath(xpath
     }
 }
 #+end_src
-----------------------------------
+------
