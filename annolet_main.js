@@ -24,6 +24,9 @@ function annolet_createContainer() {
     "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
     "<span id='annolet' style='color:grey;'>|</span>"+
     "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>TagIt!</li>"+
+    /*"<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=2;'>Highlight</li>"+*/
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=3;'>Phonetics</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=4;'>Translation</li>"+
     "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
     "</ul>"; //HTML to create a list of options
 }
@@ -54,6 +57,13 @@ function anno_getElementByXpath(xpath) {
     return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
+//------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------------
+
+
+
 //main function which will execute other functions
 function annolet_main() {
     disableAllLinks()  // it will disable all the links present in webpage iteratively
@@ -67,6 +77,12 @@ function annolet_main() {
         var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
+        }
+        if(annolet_btn === 4){
+          anno_language(xpath);
+        }
+        else if (annolet_btn == 3){
+          anno_phonetic(xpath);
         }
     };
 }
@@ -111,7 +127,7 @@ function tagObject(xpath, obj){
 
 //function for highlighting element
 function anno_highlight(xpath) {
-    clicked_element = anno_getElementByXpath(xpath)
+    clicked_element = anno_getElementByXpath(xpath);
     //if element is already highlighted
     if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
         console.log('not permitted');
