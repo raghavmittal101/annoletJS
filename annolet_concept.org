@@ -7,6 +7,9 @@
 
   To run this program call =annolet_main()= function.
 ------------------------------
+
+** Requirements
+
 ** Use of =jQuery.noConflict()=
    To make the program more robust and avoid clash between variables with that of running website
    jQuery noConflict() is used and normal '$' selector is changed with '$j'.

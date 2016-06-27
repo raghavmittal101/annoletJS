@@ -24,6 +24,9 @@ function annolet_createContainer() {
     "<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>"+
     "<span id='annolet' style='color:grey;'>|</span>"+
     "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=1;'>TagIt!</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=2;'>Highlight</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=3;'>Phonetics</li>"+
+    "<li id='annolet' class=annolet-tools-menu-item id=highlight-btn onclick='annolet_btn=4;'>Translation</li>"+
     "<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>"+
     "</ul>"; //HTML to create a list of options
 }
@@ -54,6 +57,120 @@ function anno_getElementByXpath(xpath) {
     return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
+//------------------------------------------------------------------------
+var phonetic_trans = "default_value";
+var language_trans = "default_value";
+
+function get_phonetics(str){
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "//localhost:5000/phonetic-trans", true); // replace localhost afterwards.
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+  xhr.send(JSON.stringify({"sentence":str}));
+
+
+  xhr.onreadystatechange = processRequest;
+
+  function processRequest(e)
+  {
+    if (xhr.readyState == 4)
+    {
+      console.log('pho trans set');
+      phonetic_trans = xhr.responseText;
+    }
+  }
+
+}
+
+function get_languagetrans(str,fr,to){
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "//localhost:5000/language-translive", true); // replace localhost afterwards
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+  xhr.send(JSON.stringify({"sentence":str,"from-language":fr,"to-language":to}));
+
+  xhr.onreadystatechange = processRequest;
+
+  function processRequest(e)
+  {
+    if (xhr.readyState == 4)
+    {
+      console.log('language trans set');
+      language_trans = xhr.responseText;
+    }
+  }
+
+}
+
+
+
+//function for getting phonetic
+function anno_phonetic(xpath) {
+    //if element is already translated
+  if (anno_getElementByXpath(xpath).id != "phonetic" || !(anno_getElementByXpath(xpath).id)) {
+    var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
+    get_phonetics(text_to_translate);
+    var timer = window.setInterval
+    (
+      function ()
+      {
+        if(typeof phonetic_trans !== "default_value")
+        {
+          console.log("text changing");
+          $j(anno_getElementByXpath(xpath)).text(phonetic_trans);
+          phonetic_trans = "default_value";
+          window.clearInterval(timer);
+        }
+        else
+        {
+          console.log("returned without change");
+        }
+      }
+      ,1000
+    );
+  }
+  else {
+        console.log('already translated');
+    }
+}
+
+
+//function for getting phonetic
+function anno_language(xpath) {
+  //if element is already translated
+  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {
+    var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
+    get_languagetrans(text_to_translate,'en','hi');
+    var timer = window.setInterval
+    (
+      function ()
+      {
+        if(typeof language_trans !== "default_value")
+        {
+          console.log("text changing");
+          $j(anno_getElementByXpath(xpath)).text(language_trans);
+          language_trans = "default_value";
+          window.clearInterval(timer);
+        }
+        else
+        {
+          console.log("returned without change");
+        }
+      }
+      ,1000
+    );
+  }
+  else {
+        console.log('already translated');
+    }
+}
+
+//------------------------------------------------------------------------
+
+
+
 //main function which will execute other functions
 function annolet_main() {
     disableAllLinks()  // it will disable all the links present in webpage iteratively
@@ -67,6 +184,12 @@ function annolet_main() {
         var xpath = anno_getXpathTo(target);
         if (annolet_btn === 1) {
             anno_highlight(xpath);
+        }
+        if(annolet_btn === 4){
+          anno_language(xpath);
+        }
+        else if (annolet_btn == 3){
+          anno_phonetic(xpath);
         }
     };
 }
