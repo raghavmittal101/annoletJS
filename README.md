@@ -24,7 +24,7 @@
 * Go to directory in which org-file is saved, there you will find js file with same name as that of org-file.
 
 ### Using this tool ###
-For detailed instructions [[https://github.com/SSS-Studio-development/annoletjs/master/annolet_concept.org][click here]] .
+For detailed instructions [click here]: https://github.com/SSS-Studio-development/annoletjs/master/annolet_concept.org .
 
 ###Setting up org-mode in Emacs24+###
 * open emacs and execute key sequence `M-x`.
