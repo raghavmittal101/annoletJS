@@ -1,8 +1,14 @@
-#AnnoLet!
+#AnnoLet! Release 0
+
 ###AnnoLet! is a web annotation tool.###
 * A tool to annotate Webpages.
-* It is under development. No release has been made till now.
-* For now only highlight feature works.
+* It has no persistence for now.
+
+###Features ###
+* Manual Tagging
+* English to Hindi translation
+* Conversion to IPA phonetic representation.
+* All features apply on Node level
 
 ### How to set up? ###
 ####Setting up repository####
@@ -18,9 +24,7 @@
 * Go to directory in which org-file is saved, there you will find js file with same name as that of org-file.
 
 ### Using this tool ###
-* This tool is in the form of bookmarklet.
-* To get that bookmarklet, Go to this link
-* Follow the instructions.
+For detailed instructions [[https://github.com/SSS-Studio-development/annoletjs/master/annolet_concept.org][click here]] .
 
 ###Setting up org-mode in Emacs24+###
 * open emacs and execute key sequence `M-x`.
