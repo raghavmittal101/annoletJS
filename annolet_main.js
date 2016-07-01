@@ -153,7 +153,7 @@ function anno_language(xpath) {
   }
   else {
   //if element is already translated
-  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {mark
+  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {
     var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
     get_languagetrans(text_to_translate,'en','hi');
     var timer = window.setInterval
