@@ -95,9 +95,7 @@ function anno_phonetic(xpath) {
 
 
 //main function which will execute other functions
-function annolet_main() {
-    disableAllLinks();  // it will disable all the links present in webpage iteratively
-    annolet_createContainer();
+function run_phoneticConversion() {
     document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
