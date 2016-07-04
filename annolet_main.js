@@ -11,5 +11,13 @@ function disableAllLinks(){
     }
 }
 
+// for exiting annolet
+$("#annolet-exit-btn").onclick(function(e) {
+    if (e === undefined) {
+        e = window.event;
+    } // for IE
+    e.stopPropagation();
+});
+    
 // calling main function
 annolet_main();
