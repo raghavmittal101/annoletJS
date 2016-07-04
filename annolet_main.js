@@ -58,7 +58,6 @@ function anno_audio(xpath)
 
 function listenOnSelection(){
   //main function which will execute other functions
-  function annolet_main() {
     document.onclick = function(event) {
       console.log("mouse down hello");
       event.preventDefault();
@@ -71,5 +70,4 @@ function listenOnSelection(){
         anno_audio(xpath);
   
     };
-  }
 }
