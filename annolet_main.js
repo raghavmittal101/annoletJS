@@ -56,19 +56,20 @@ function anno_audio(xpath)
 //------------------------------------------------------------------------
 
 
-
-//main function which will execute other functions
-function annolet_main() {
-  document.onclick = function(event) {
-    console.log("mouse down hello");
-    event.preventDefault();
-    if (event === undefined) {
-      event = window.event;
-    } // for IE
-    var target = 'target' in event ? event.target : event.srcElement; // for IE
-    var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
-    var xpath = anno_getXpathTo(target);
-      anno_audio(xpath);
-
-  };
+function listenOnSelection(){
+  //main function which will execute other functions
+  function annolet_main() {
+    document.onclick = function(event) {
+      console.log("mouse down hello");
+      event.preventDefault();
+      if (event === undefined) {
+        event = window.event;
+      } // for IE
+      var target = 'target' in event ? event.target : event.srcElement; // for IE
+      var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
+      var xpath = anno_getXpathTo(target);
+        anno_audio(xpath);
+  
+    };
+  }
 }
