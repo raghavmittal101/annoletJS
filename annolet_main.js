@@ -1,6 +1,3 @@
-
-var $j = jQuery.noConflict();
-
 // function to get Xpath to passed element
 function anno_getXpathTo(element) {
     if (element.id !== '') {
@@ -28,75 +25,77 @@ function anno_getElementByXpath(xpath) {
 }
 
 //------------------------------------------------------------------------
-var language_trans = "default_value";
-
-function get_languagetrans(str,fr,to){
-
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "//localhost:5000/language-translive", true); // replace localhost afterwards
-  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-  xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-  xhr.send(JSON.stringify({"sentence":str,"from-language":fr,"to-language":to}));
-
-  xhr.onreadystatechange = processRequest;
-
-  function processRequest(e)
-  {
-    if (xhr.readyState == 4)
-    {
-      console.log('language trans set');
-      language_trans = xhr.responseText;
-    }
-  }
-
-}
-
-
-
-
-//function for getting phonetic
-function anno_language(xpath) {
+function anno_rtag(xpath)
+{
   var clicked_element = anno_getElementByXpath(xpath);
-  //if element is already highlighted
-  if (clicked_element.id == "mark" || clicked_element.id == "annolet") {
-      console.log('not permitted');
-  }
-  else {
-  //if element is already translated
-  if (anno_getElementByXpath(xpath).id != "language" || !(anno_getElementByXpath(xpath).id)) {
-    var text_to_translate = $j(anno_getElementByXpath(xpath)).html();
-    get_languagetrans(text_to_translate,'en','hi');
-    var timer = window.setInterval
-    (
-      function ()
-      {
-        if(typeof language_trans !== "default_value")
-        {
-          console.log("text changing");
-          $j(anno_getElementByXpath(xpath)).text(language_trans);
-          language_trans = "default_value";
-          window.clearInterval(timer);
-        }
-        else
-        {
-          console.log("returned without change");
-        }
-      }
-      ,1000
-    );
-  }
-  else {
-        console.log('already translated');
-    }
-  }
-}
+  var span = document.createElement("span");
+  var prop = document.createAttribute("property");
+  if (window.getSelection().toString().length!==0) {
+    
+        var link = document.createElement("link");
+    var rel = document.createAttribute("rel");
+    rel.value = "stylesheet";
+    var href = document.createAttribute("href");
+    href.value = "https://code.jquery.com/ui/1.8.24/themes/smoothness/jquery-ui.css";
+    link.setAttributeNode(rel);
+    link.setAttributeNode(href);
+    var head = document.getElementsByTagName("head");
+        head[0].appendChild(link);
 
+    $j(head).append('<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' );
+    
+    $j("#dialog").dialog({
+      
+      autoOpen: true,
+      buttons: {
+        
+        Date: function() { 
+          
+          alert("Date!");
+          prop.value = "Date";
+          $j(this).dialog("close"); 
+        },
+        Currency: function() { 
+          
+          alert("Currency");
+          prop.value = "Currency";
+          $j(this).dialog("close"); 
+
+        },
+        Unit: function() { 
+          
+          alert("Unit");
+          prop.value = "Unit";
+          $j(this).dialog("close"); 
+        }
+        
+      },
+      width: "400px"
+      
+    });
+
+    var div1 = document.createElement("div");
+    var id = document.createAttribute(id);
+    id.value="dialog";
+    div1.setAttributeNode(id);
+    clicked_element.appendChild(div1);
+    
+    span.setAttributeNode(prop);
+    var sel = window.getSelection();
+    if (sel.rangeCount) {
+      var range = sel.getRangeAt(0).cloneRange();
+      range.surroundContents(span);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }  
+}
 //------------------------------------------------------------------------
 
 
 
 //main function which will execute other functions
-function run_langtrans() {
+function do_tagging() {
     document.onclick = function(event) {
         if (event === undefined) {
             event = window.event;
@@ -104,6 +103,6 @@ function run_langtrans() {
         var target = 'target' in event ? event.target : event.srcElement; // for IE
         var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
         var xpath = anno_getXpathTo(target);
-          anno_language(xpath);
+          anno_rtag(xpath);
     };
 }
