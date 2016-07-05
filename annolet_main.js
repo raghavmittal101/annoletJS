@@ -12,7 +12,7 @@ function disableAllLinks(){
 }
 
 // for exiting annolet
-$("#annolet-exit-btn").onclick(function(e) {
+$j("#annolet-exit-btn").onclick(function(e) {
     if (e === undefined) {
         e = window.event;
     } // for IE
