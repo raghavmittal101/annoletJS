@@ -1,8 +1,14 @@
+var $j = $.noConflict;
+
 function injectAndCall(){
     
     webSketch.inject();
+    $j(window).load(
+        function(){
     webSketch.canvasSizeHandler.initDimensions();  /* Set inital dimensions according to Window size */
     webSketch.createCanvas(); /* render canvas */
+        }
+    );
                  
 };
 
@@ -81,8 +87,8 @@ window.onresize = function(){
     webSketch.canvas.setHeight(webSketch.canvasSizeHandler.height);
     webSketch.canvas.setWidth(webSketch.canvasSizeHandler.width);
     webSketch.canvas.renderAll();
-    $('#canvas-container').css("width",webSketch.canvasSizeHandler.width);
-    $('#canvas-container').css("height",webSketch.canvasSizeHandler.width);
+    $j('#canvas-container').css("width",webSketch.canvasSizeHandler.width);
+    $j('#canvas-container').css("height",webSketch.canvasSizeHandler.width);
 };
 
 /* TOOLS for drawing */
@@ -103,26 +109,21 @@ webSketch.tools.pen = function(color, width){
 webSketch.tools.hideCanvas = function(){
     var nodes = document.getElementById("canvasContainer").getElementsByTagName('*');
     for(var i = 0; i < nodes.length; i++){
-        $(nodes[i]).attr("hidden", true)}
+        $j(nodes[i]).attr("hidden", true)}
 }
 
 webSketch.tools.showCanvas = function(){
     var nodes = document.getElementById("canvasContainer").getElementsByTagName('*');
     for(var i = 0; i < nodes.length; i++){
-        $(nodes[i]).attr("hidden", false)}
+        $j(nodes[i]).attr("hidden", false)}
 }
-// when DOM is ready, convas will be added.
-$(document).ready(function(){
-    injectAndCall();});
-
-
 
 /*----------------funtions for controlling HTML menu-------*/
 /* showing and hiding menu */
 webSketch.menu = {};
 webSketch.menu.hide = function(){
-    $('.draw-app-list-container').attr("hidden",true);
+    $j('.draw-app-list-container').attr("hidden",true);
 }
 webSketch.menu.show = function(){
-    $('.draw-app-list-container').attr("hidden",false);
+    $j('.draw-app-list-container').attr("hidden",false);
 }
