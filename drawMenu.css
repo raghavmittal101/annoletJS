@@ -1,0 +1,13 @@
+ul#draw-app-list {
+    background: white;
+    position: fixed;
+    bottom: 50%;
+    right: 0px;
+}
+
+li#draw-app-list {
+    display: block;
+    border: 1px grey solid;
+    padding: 20% 10% 10% 20%;
+    cursor: pointer;
+}
