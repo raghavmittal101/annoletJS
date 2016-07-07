@@ -14,5 +14,5 @@ li#draw-app-list {
     z-index:99;
 }
 li#draw-app-list:hover {
-    background: "#ffffff"
+    background: "#ffffff";
 }
