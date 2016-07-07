@@ -1,9 +1,7 @@
-var $j = $.noConflict;
-
 function injectAndCall(){
     
     webSketch.inject();
-    $j(window).load(
+    $(window).load(
         function(){
     webSketch.canvasSizeHandler.initDimensions();  /* Set inital dimensions according to Window size */
     webSketch.createCanvas(); /* render canvas */
@@ -55,6 +53,7 @@ webSketch.createCanvas = function(){
     canvasContainer.id = 'canvasContainer';
     canvasContainer.style.position = 'absolute';
     canvasContainer.style.top = '-1px';
+    canvasContainer.style.zIndex = 98;
     
     var canvasElement = document.createElement('canvas');
     canvasElement.id="sheet";
@@ -87,8 +86,8 @@ window.onresize = function(){
     webSketch.canvas.setHeight(webSketch.canvasSizeHandler.height);
     webSketch.canvas.setWidth(webSketch.canvasSizeHandler.width);
     webSketch.canvas.renderAll();
-    $j('#canvas-container').css("width",webSketch.canvasSizeHandler.width);
-    $j('#canvas-container').css("height",webSketch.canvasSizeHandler.width);
+    $('#canvas-container').css("width",webSketch.canvasSizeHandler.width);
+    $('#canvas-container').css("height",webSketch.canvasSizeHandler.width);
 };
 
 /* TOOLS for drawing */
@@ -109,21 +108,21 @@ webSketch.tools.pen = function(color, width){
 webSketch.tools.hideCanvas = function(){
     var nodes = document.getElementById("canvasContainer").getElementsByTagName('*');
     for(var i = 0; i < nodes.length; i++){
-        $j(nodes[i]).attr("hidden", true)}
+        $(nodes[i]).attr("hidden", true)}
 }
 
 webSketch.tools.showCanvas = function(){
     var nodes = document.getElementById("canvasContainer").getElementsByTagName('*');
     for(var i = 0; i < nodes.length; i++){
-        $j(nodes[i]).attr("hidden", false)}
+        $(nodes[i]).attr("hidden", false)}
 }
 
 /*----------------funtions for controlling HTML menu-------*/
 /* showing and hiding menu */
 webSketch.menu = {};
 webSketch.menu.hide = function(){
-    $j('.draw-app-list-container').attr("hidden",true);
+    $('.draw-app-list-container').attr("hidden",true);
 }
 webSketch.menu.show = function(){
-    $j('.draw-app-list-container').attr("hidden",false);
+    $('.draw-app-list-container').attr("hidden",false);
 }

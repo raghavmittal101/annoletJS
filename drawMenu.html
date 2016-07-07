@@ -1,8 +1,9 @@
-<div class = draw-app-list-container>
-<ul id="draw-app-list">
-  <li id="draw-app-list" onclick="webSketch.tools.pen()">Pen</li>
-  <li id="draw-app-list" onclick="webSketch.tools.eraser()">Eraser</li>
-  <li id="draw-app-list" onclick="webSketch.tools.showCanvas()">Show</li>
-  <li id="draw-app-list" onclick="webSketch.tools.hideCanvas()">Hide</li>
+<div class ="draw-app-list-container">
+<ul id="draw-app-list" style="z-index:99">
+    <li id="draw-app-list" onclick="webSketch.tools.pen("#000000", 2)">Pen</li> <!-- default value given.. ui will be added later -->
+    <li id="draw-app-list" onclick="webSketch.tools.eraser()">Eraser</li>
+    <li id="draw-app-list" onclick="webSketch.tools.showCanvas()">Show Canvas</li>
+    <li id="draw-app-list" onclick="webSketch.tools.hideCanvas()">Hide Canvas</li>
+    <li id="draw-app-list" onclick="webSketch.canvas.isDrawingMode = false;">Move/Resize</li>
 </ul>
 </div>

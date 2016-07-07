@@ -1,8 +1,9 @@
 ul#draw-app-list {
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     position: fixed;
     bottom: 50%;
     right: 0px;
+    z-index:99;
 }
 
 li#draw-app-list {
@@ -10,4 +11,8 @@ li#draw-app-list {
     border: 1px grey solid;
     padding: 20% 10% 10% 20%;
     cursor: pointer;
+    z-index:99;
+}
+li#draw-app-list:hover {
+    background: "#ffffff"
 }
