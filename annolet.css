@@ -1,7 +1,7 @@
 /*Control Menu styling*/
 .annolet-tools-menu{
-      width: 400px;
-      border: 1px #B3B3B3 solid;
+      width: 500px;
+      border: 1px #666666 solid;
       border-radius: 15px 15px 0 0 ;
       list-style: none;
       padding: 5px 20px 10px 20px;
@@ -29,47 +29,4 @@
   border-radius:10px;
   color:blue;
   font-weight:bold;
-}
-
-/*note div box styling*/
-#annolet-note-box{
-  width: 200px;
-  height: 200px;
-  background: lightyellow;
-  border: 1px solid orange;
-  border-radius: 10px;
-  position: fixed;
-  right: 20px;
-  top: 200px;
-  z-index:9999;
-}
-#annolet-note-submit{
-  top: 20%;
-  background: orange;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  z-index:9999;
-}
-#annolet-note-cancel{
-  top: 20%;
-  background: grey;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  z-index:9999;
-}
-#annolet-note-textarea{
-  resize: none;
-  width: inherit;
-  height: inherit;
-  background: none;
-  color: black;
-  font-size: 1.2em;
-  padding: 10px;
-  border: none;
-  z-index:9999;
-}
-.annolet_init:hover{
-  border: dotted 1px black;
 }
