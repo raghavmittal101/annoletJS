@@ -76,7 +76,7 @@ webSketch.inject.menu = function(){
     var link = document.createElement('link');
     link.rel="stylesheet";
     link.type="text/css";
-    link.href="//rawgit.com/raghavmittal101/webservices/webDraw/drawMenu.css?v="+parseInt(Math.random()*1000)";
+    link.href="//rawgit.com/raghavmittal101/webservices/webDraw/drawMenu.css?v="+parseInt(Math.random()*1000);
     head.appendChild(link);
 };
 
