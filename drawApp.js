@@ -42,11 +42,11 @@ webSketch.inject.jsLibraries = function(){
     var head = document.getElementsByTagName('head')[0];
 
     /*injecting jQuery into <HEAD>*/
-    script.src="//code.jquery.com/jquery-2.2.4.min.js";
-    head.appendChild(script);
+ // script.src="//code.jquery.com/jquery-2.2.4.min.js";
+ //  head.appendChild(script);
 
-    var script = document.createElement('script');
-    var head = document.getElementsByTagName('head')[0];
+ // var script = document.createElement('script');
+ //   var head = document.getElementsByTagName('head')[0];
     
     /*injecting FabricJS into <HEAD>*/
     script.src = "//cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.3/fabric.min.js";
@@ -61,7 +61,7 @@ webSketch.inject.menu = function(){
     div.className = ".draw-app-list-container";
     div.innerHTML =
     '<ul id="draw-app-list" style="z-index:99">'+
-        '<li id="draw-app-list" onclick="webSketch.tools.pen("#000000", 2)">Pen</li> <!-- default value given.. ui will be added later -->'+
+        '<li id="draw-app-list" onclick="webSketch.tools.pen()">Pen</li> <!-- default value given.. ui will be added later -->'+
         '<li id="draw-app-list" onclick="webSketch.tools.eraser()">Eraser</li>'+
         '<li id="draw-app-list" onclick="webSketch.canvas.clear()">Clear Canvas</li>'+
         '<li id="draw-app-list" onclick="webSketch.tools.showCanvas()">Show Canvas</li>'+
@@ -123,7 +123,8 @@ webSketch.createCanvas = function(){
     webSketch.canvas.setWidth(webSketch.canvasSizeHandler.width);
     
     // other settings
-    webSketch.canvas.isDrawingMode = true;
+    webSketch.tools.hideCanvas(); /* canvas will be hidden initially */
+    webSketch.canvas.isDrawingMode = false;
     webSketch.canvas.freeDrawingBrush.width = 3;
     webSketch.canvas.freeDrawingBrush.color = "#005df2";
 
@@ -151,10 +152,15 @@ webSketch.tools.eraser = function(){
     };
 };
 
-webSketch.tools.pen = function(color, width){
+webSketch.tools.pen = function(){
+	webSketch.tools.showCanvas();
     webSketch.canvas.isDrawingMode = true;
-    webSketch.canvas.freeDrawingBrush.color = color;
-    webSketch.canvas.freeDrawingBrush.width = width;
+    var color = prompt("color code",webSketch.canvas.freeDrawingBrush.color);
+    var size = prompt("brush size", webSketch.canvas.freeDrawingBrush.width);
+    if(color === null) webSketch.canvas.freeDrawingBrush.color = webSketch.canvas.freeDrawingBrush.color;
+    else webSketch.canvas.freeDrawingBrush.color = color;
+    if(size === null) webSketch.canvas.freeDrawingBrush.width = webSketch.canvas.freeDrawingBrush.width;
+    else webSketch.canvas.freeDrawingBrush.width = size;
 };
 
 webSketch.tools.hideCanvas = function(){
