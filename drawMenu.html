@@ -1,11 +1,38 @@
-<div class ="draw-app-list-container">
-<ul id="draw-app-list" style="z-index:99">
-    <li id="draw-app-list" onclick="webSketch.tools.pen("#000000", 2)">Pen</li> <!-- default value given.. ui will be added later -->
-    <li id="draw-app-list" onclick="webSketch.tools.eraser()">Erase</li>
-    <li id="draw-app-list" onclick="webSketch.canvas.clear()">Clear Canvas</li>
-    <li id="draw-app-list" onclick="webSketch.tools.showCanvas()">Show Canvas</li>
-    <li id="draw-app-list" onclick="webSketch.tools.hideCanvas()">Hide Canvas</li>
-    <li id="draw-app-list" onclick="webSketch.tools.showJSON()">show JSON</li>
-    <li id="draw-app-list" onclick="webSketch.tools.loadFromJSON()">Load from JSON</li>
-</ul>
-</div>
+<html>
+  <head>
+    <title>Web Draw - hand written annotations on web</title>
+  </head>
+  <body>
+    <style>
+      body{background: #E1E1E3;
+        font-family:sans;
+        color: black;
+      }
+      #link-btn{
+        background:blue;
+        color:white;
+        display: box;
+        padding:5px;
+        text-decoration:none;
+        font-weight:bold;
+      }
+      h1 {
+        background-color: rgb(0, 0, 0);
+        color: rgb(248, 241, 241);
+        margin-top: -20px;
+        padding: 150px 10px 50px 50px;
+        width: auto;
+      }
+      #container{
+        margin:20px 10px 10px 15px;
+      }
+    </style>
+    <div id="jumbotron"><h1>Web Draw - Hand written annotations on web</h1></div>
+    <div id="container">
+      <h3>Drag this box to your bookmark bar</h3>
+      <a href="javascript:(function(){if(!($=window.jQuery)){script=document.createElement('script');script.src='//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js';script.onload=initWebDraw();document.getElementsByTagName('head')[0].appendChild(script);}else{initWebDraw();}function initWebDraw(){script=document.createElement('script');script.src='//rawgit.com/raghavmittal101/webservices/webDraw/drawApp.js?v='+parseInt(Math.random()*1000);document.getElementsByTagName('head')[0].appendChild(script);}})()" id="link-btn">Web Draw</a>
+      <h5>release version 1.A</h5>
+      <p style="font-size:.9em;bottom:0;position:absolute;color:grey;">This tool is developed at <b>VLEAD, Software Engineering Research Center, IIIT Hyderabad.</b></p>
+    </div>
+  </body>
+</html>
