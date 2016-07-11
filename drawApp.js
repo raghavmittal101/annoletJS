@@ -22,18 +22,16 @@
         window.onresize change width of canvas
 */
 
-function injectAndCall(){
-	console.log('injecting libraries');
-	
+
 	// script will load fabric js and trigger other functions. needs JQuery v >= 1.0
 	$.getScript("//cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.3/fabric.min.js", function(){
 		console.log('running scripts');
 		webSketch.canvasSizeHandler.initDimensions();  /* Set inital dimensions according to Window size */
 		webSketch.createCanvas(); /* render canvas */
+		webSketch.inject.menu();
+		webSketch.menu.show();
 		});
     console.log('done');
-                 
-}
 
 
 var webSketch = {}; /*namespace*/
@@ -78,7 +76,7 @@ webSketch.inject.menu = function(){
     var link = document.createElement('link');
     link.rel="stylesheet";
     link.type="text/css";
-    link.href="//rawgit.com/raghavmittal101/webservices/webDraw/drawMenu.css";
+    link.href="//rawgit.com/raghavmittal101/webservices/webDraw/drawMenu.css?v="+parseInt(Math.random()*1000)";
     head.appendChild(link);
 };
 
