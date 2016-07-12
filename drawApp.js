@@ -155,7 +155,7 @@ webSketch.tools.eraser = function(){
 };
 
 webSketch.tools.moveResizeDrawings = function(){
-	winow.onclick = function(){
+	window.onclick = function(){
 		webSketch.canvas.isDrawingMode = false;
 	};
 };
