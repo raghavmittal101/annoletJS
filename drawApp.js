@@ -11,6 +11,7 @@
 			initDimensions()
 		tools
 			pen()
+			moveResizeDrawings()
 			hideCanvas()
 			showCanvas()
 			eraser()
@@ -47,11 +48,11 @@ webSketch.inject.jsLibraries = function(){
 
  // var script = document.createElement('script');
  //   var head = document.getElementsByTagName('head')[0];
-    
+
     /*injecting FabricJS into <HEAD>*/
     script.src = "//cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.3/fabric.min.js";
     head.appendChild(script);
-    
+
 };
 webSketch.inject.menu = function(){
 	console.log('injecting menu');
@@ -63,6 +64,7 @@ webSketch.inject.menu = function(){
     '<ul id="draw-app-list" style="z-index:99">'+
         '<li id="draw-app-list" onclick="webSketch.tools.pen()">Pen</li> <!-- default value given.. ui will be added later -->'+
         '<li id="draw-app-list" onclick="webSketch.tools.eraser()">Eraser</li>'+
+				'<li id="draw-app-list" onclick="webSketch.tools.moveResizeDrawings()">Move/Resize drawings</li>'+
         '<li id="draw-app-list" onclick="webSketch.canvas.clear()">Clear Canvas</li>'+
         '<li id="draw-app-list" onclick="webSketch.tools.showCanvas()">Show Canvas</li>'+
         '<li id="draw-app-list" onclick="webSketch.tools.hideCanvas()">Hide Canvas</li>'+
@@ -71,7 +73,7 @@ webSketch.inject.menu = function(){
         '</ul>';
     body.appendChild(div);
     webSketch.menu.hide();
-    
+
     var head = document.getElementsByTagName('head')[0];
     var link = document.createElement('link');
     link.rel="stylesheet";
@@ -83,7 +85,7 @@ webSketch.inject.menu = function(){
 webSketch.canvasSizeHandler = {
     height: 0,
     width: 0,
-    initDimensions: function(){ 
+    initDimensions: function(){
 		console.log('getting dimensions of screen');
         var body = document.body;
         html = document.documentElement;
@@ -106,7 +108,7 @@ webSketch.createCanvas = function(){
     canvasContainer.style.position = 'absolute';
     canvasContainer.style.top = '-1px';
     canvasContainer.style.zIndex = 98;
-    
+
     var canvasElement = document.createElement('canvas');
     canvasElement.id="sheet";
     canvasContainer.appendChild(canvasElement);
@@ -117,11 +119,11 @@ webSketch.createCanvas = function(){
 
     // creating canvas with ID=sheet
     webSketch.canvas = new fabric.Canvas('sheet');
-    
+
     // assigning convas height
     webSketch.canvas.setHeight(webSketch.canvasSizeHandler.height);
     webSketch.canvas.setWidth(webSketch.canvasSizeHandler.width);
-    
+
     // other settings
     webSketch.tools.hideCanvas(); /* canvas will be hidden initially */
     webSketch.canvas.isDrawingMode = false;
@@ -143,13 +145,19 @@ window.onresize = function(){
     //$('#canvas-container').css("height",webSketch.canvasSizeHandler.height);
 };
 
-/* TOOLS for drawing */
+/* --------------- TOOLS for drawing -----------------*/
 webSketch.tools = {};
 webSketch.tools.eraser = function(){
     webSketch.canvas.isDrawingMode = false;
     window.onclick = function(){
         webSketch.canvas.remove(webSketch.canvas.getActiveObject());
     };
+};
+
+webSketch.tools.moveResizeDrawings = function(){
+	winow.onclick = function(){
+		webSketch.canvas.isDrawingMode = false;
+	};
 };
 
 webSketch.tools.pen = function(){
